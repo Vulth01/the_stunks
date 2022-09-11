@@ -11,6 +11,9 @@ void ChessBoard::ColourChange() {
 
 void ChessBoard::drawGeometry() 
 {
+	
+	// beep boop
+
 	bool colourCheck = false;
 	float offset;
 	
