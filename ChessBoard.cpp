@@ -46,8 +46,38 @@ void ChessBoard::drawGeometry()
 		}
 	}
 
+	drawBorder();
 
+}
 
+void ChessBoard::drawBorder() {
+	glBegin(GL_QUADS);
+	{
+
+		//10 - 8       6 - 8
+		glColor3f(0.3f, 0.3f, 0.3f);
+
+		glVertex3f(-10, -10, 5);
+		glVertex3f(-10, -8, 5);
+		glVertex3f(-8, -8, 5);
+		glVertex3f(-8, -10, 5);
+
+		glVertex3f(6, 6, 6);
+		glVertex3f(6, 8, 6);
+		glVertex3f(8, 8, 6);
+		glVertex3f(8, 6, 6);
+
+		glVertex3f(-10, -10, 5);
+		glVertex3f(-10, -8, 5);
+		glVertex3f(-8, -8, 5);
+		glVertex3f(-8, -10, 5);
+
+		glVertex3f(6, 6, 6);
+		glVertex3f(6, 8, 6);
+		glVertex3f(8, 8, 6);
+		glVertex3f(8, 6, 6);
+
+	}
 }
 
 
@@ -60,6 +90,10 @@ void ChessBoard::drawCube(bool isBlack, int x, int y, float offset) {
 	GLfloat verticeF[] = { 1, -1, 1, };
 	GLfloat verticeG[] = { 1, 1, 1 };
 	GLfloat verticeH[] = { -1, 1, 1 };
+
+	offset /= 2; //this is for it to be between 0 and 0.5 instead of 1
+
+	std::cout << " x : " << x << "   y : "  << y << std::endl;
 
 	glBegin(GL_QUADS);
 	{

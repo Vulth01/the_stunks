@@ -6,6 +6,7 @@ class ChessBoard : public GameObject
 private:
 	void drawGeometry() override;
 	void drawBoard();
+	void drawBorder();
 	void drawCube(bool isBlack, int x, int y, float offset);
 	float heightOffset;
 	bool ChangeColour;

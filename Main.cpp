@@ -66,7 +66,7 @@ void init() {
 
 
 	gluLookAt(
-		0, 0, 20,
+		40, 0, 100,
 		0, 0, 0,
 		0, -1, 0
 	);
@@ -91,7 +91,7 @@ void display() {
 	//gameObject.draw();
 	//rainbowCube.draw();
 	
-	glRotatef(1, 5, 5, 0);	
+	glRotatef(3, 10, 10, 0);	
 	
 	for (int x = 0; x < 8; x++)
 	{
@@ -102,10 +102,10 @@ void display() {
 			/*cout << "x - " << x << endl;
 			cout << "y - " << y << endl;
 			cout << "height - " << p.r << endl;*/
-			heightMap.DrawMap(x, y, (float)p.r);
+			//heightMap.DrawMap(x, y, (float)p.r);
 		}
 	}
-	//chessBoard.draw();
+	chessBoard.draw();
 
 	glutSwapBuffers();
 
@@ -113,5 +113,5 @@ void display() {
 
 void timer(int) {
 	glutPostRedisplay();
-	glutTimerFunc(1000/60, timer, 0);
+	//glutTimerFunc(1000/60, timer, 0);
 }
