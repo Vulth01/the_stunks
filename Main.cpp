@@ -14,6 +14,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
+#define LEFT_ARROW 75
+#define RIGHT_ARROW 77
+
 using namespace std;
 
 
@@ -51,6 +54,10 @@ int main(int argc, char* argv[]) {
 	glutDisplayFunc(display);
 	glutTimerFunc(0, timer, 0);
 	//glutKeyboardFunc(inputKeys);
+
+	int c = getch();
+	inputKeys(c);
+
 	init();
 	glutMainLoop();
 	
@@ -68,14 +75,14 @@ void init() {
 	//glOrtho(0, WIDTH, HEIGHT, 0,0,1);
 	gluPerspective(50.0, (double)WIDTH / (double)HEIGHT, 1.0, 1000.0);
 
-	//updateCamera();
+	updateCamera();
 	gluLookAt(
 		0, 30, 50,
 		0, 0, 0,
 		0, 1, 0
 	);
 
-	//camera = new CameraController();
+	camera = new CameraController();
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
 	texture = new Texture("Textures/cloudimage.png");
@@ -130,9 +137,18 @@ void updateCamera() {
 	);
 }
 
-void inputKeys(unsigned char key, int x, int y) {
+/*void inputKeys(unsigned char key, int x, int y) {
 	if (key == 'a')	cameraPos--;
 	if (key == 'd')	cameraPos++;
+	
+	if (cameraPos > 2) cameraPos = 0;
+	if (cameraPos < 0) cameraPos = 2;
+
+	cout << "cameraPos: " << cameraPos << endl;*/
+
+	void inputKeys(int key) {
+	if (key == LEFT_ARROW)	cameraPos--;
+	if (key == RIGHT_ARROW)	cameraPos++;
 	
 	if (cameraPos > 2) cameraPos = 0;
 	if (cameraPos < 0) cameraPos = 2;
