@@ -44,12 +44,15 @@ Pixel Texture::getPixelAt(int x, int y)
 	}
 	if (image)
 	{
-		unsigned char* pixelOffset = image + (x + width * y) * channels;
-		p.r = static_cast<int>(pixelOffset[0]);
-		p.g = static_cast<int>(pixelOffset[1]);
-		p.b = static_cast<int>(pixelOffset[2]);
-		p.a = channels >= 4 ? static_cast<int>(pixelOffset[3]) : 255;
+		unsigned char* pixelOffset = image + ((x + width * y) * channels);
+		
+		if (channels >= 1) p.r = static_cast<int>(pixelOffset[0]) / 255.0f;
+		if (channels >= 2) p.g = static_cast<int>(pixelOffset[1]) / 255.0f;
+		if (channels >= 3) p.b = static_cast<int>(pixelOffset[2]) / 255.0f;
+		if (channels >= 4) p.a = static_cast<int>(pixelOffset[3]) / 255.0f;
 	}
+
+
 	return p;
 }
 
@@ -62,13 +65,13 @@ void Texture::loadTexture(const char* path) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	stbi_set_flip_vertically_on_load(true);
-	image = stbi_load(path, &width, &height, &channels, STBI_rgb_alpha); 
+	image = stbi_load(path, &width, &height, &channels, STBI_grey); 
 
 	if (image)
 	{
 		loaded = true;
-		std::cout << "NOTICE: Texture loaded successfully: " << std::endl;
-		std::cout << width << "x" << height << std::endl;
+		//std::cout << "NOTICE: Texture loaded successfully: " << std::endl;
+		//std::cout << width << "x" << height << std::endl;
 
 	}
 	else {

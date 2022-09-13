@@ -8,6 +8,7 @@ public:
 	float nrandom[8][8];
 private:
 	void drawGeometry() override;
+	void drawTiles();
 	void drawBoard();
 	void drawBorder();
 	void drawCube(bool isBlack, int x, int y, float offset);

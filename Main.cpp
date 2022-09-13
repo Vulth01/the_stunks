@@ -70,41 +70,35 @@ void init() {
 
 	//updateCamera();
 	gluLookAt(
-		0, 0, 40,
+		0, 30, 50,
 		0, 0, 0,
-		0, -1, 0
+		0, 1, 0
 	);
 
 	//camera = new CameraController();
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
-	texture = new Texture("Textures/cloud.png");
+	texture = new Texture("Textures/cloudimage.png");
 
 	
 }
 
-
-
-
 void display() {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glRotatef(3, 10, 10, 0);	
-	
-	for (int x = 0; x <= 8; x++)
-	{
-		for (int y = 0; y <= 8; y++)
-		{
-			Pixel p = texture->getPixelAt(x, y);
-			//cout << p.r << ", " << p.g << ", " << p.b << ", " << p.a << endl;
-			/*cout << "x - " << x << endl;
-			cout << "y - " << y << endl;
-			cout << "height - " << p.r << endl;*/
-			heightMap.DrawMap(x, y, (float)p.r);
-			//terrainQuads.SetCoords(x,y,(float)p.r);
-		}
-	}
-	//chessBoard.draw();
+	glRotatef(1, 0, 1, 0);	
+
+	glPushMatrix();
+	glTranslatef(-25,0,-25);
+	heightMap.DrawMap(10, 50, texture);
+	glPopMatrix();
+
+
+	glPushMatrix();
+	glTranslatef(0, 7, 0);
+	glRotatef(90,1,0,0);
+	chessBoard.draw();
+	glPopMatrix();
 
 	glutSwapBuffers();
 
@@ -112,9 +106,8 @@ void display() {
 
 void timer(int) {
 	glutPostRedisplay();
-	//glutTimerFunc(1000/60, timer, 0);
+	glutTimerFunc(1000/60, timer, 0);
 }
-
 
 void updateCamera() {
 	glMatrixMode(GL_MODELVIEW);

@@ -11,8 +11,6 @@ void ChessBoard::SetRandom() {
 		{
 			float ran = (rand() % 20 + 1);
 			nrandom[x][y] = (ran / 10);
-
-			std::cout << " ====Random Set==== : " << nrandom[x][y] << std::endl;
 		}
 	}
 }
@@ -22,45 +20,48 @@ void ChessBoard::ColourChange() {
     bwColour = !bwColour;
 }
 
+
 void ChessBoard::drawGeometry() 
 {
-	
-	// beep boop
+	drawTiles();
+	drawBorder();
+}
 
+
+void ChessBoard::drawTiles() {
 	bool colourCheck = false;
 	float offset;
-	
+
 	for (int x = -4; x < 3; x++)
 	{
 		for (int y = -4; y < 3; y++)
 		{
-			offset = nrandom[x+4][y+4];
+			offset = nrandom[x + 4][y + 4];
 			//offset = 0;
 			drawCube(colourCheck, x * 2, y * 2, offset);
 			colourCheck = !colourCheck;
 		}
 	}
+
 	for (int x = -4; x < 3; x++)
 	{
 		for (int y = 4; y < 5; y++)
 		{
-			offset = nrandom[x+4][y+4];
+			offset = nrandom[x + 4][y + 4];
 			drawCube(colourCheck, (x * 2), (y * 2) - 2, offset);
 			colourCheck = !colourCheck;
 		}
 	}
+
 	for (int x = 4; x < 5; x++)
 	{
 		for (int y = -5; y < 3; y++)
 		{
-			offset = nrandom[x+4][y+4];
+			offset = nrandom[x + 4][y + 4];
 			colourCheck = !colourCheck;
 			drawCube(colourCheck, (x * 2) - 2, (y * 2) + 2, offset);
 		}
 	}
-
-	drawBorder();
-
 }
 
 void ChessBoard::drawBorder() {
@@ -103,7 +104,6 @@ void ChessBoard::drawBorder() {
 	}
 }
 
-
 void ChessBoard::drawCube(bool isBlack, int x, int y, float offset) {
 	GLfloat verticeA[] = { -1, -1, -1 };
 	GLfloat verticeB[] = { 1, -1, -1, };
@@ -116,13 +116,13 @@ void ChessBoard::drawCube(bool isBlack, int x, int y, float offset) {
 
 	offset /= 2; //this is for it to be between 0 and 0.5 instead of 1
 
-	std::cout << " x : " << x << "   y : "  << y << std::endl;
-
 	glBegin(GL_QUADS);
 	{
 		glPushMatrix();
 		int i = 0;
 		
+		//glColor3f(0.3f, 0.3f, 0.3f);
+
 		if (isBlack)
 			glColor3f(0,0,0);
 		else
