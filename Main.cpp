@@ -60,7 +60,6 @@ int main(int argc, char* argv[]) {
 }
 
 void init() {
-
 	glEnable(GL_DEPTH_TEST);
 
 	glMatrixMode(GL_PROJECTION);
@@ -77,28 +76,30 @@ void init() {
 
 	//camera = new CameraController();
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-
 	texture = new Texture("Textures/cloudimage.png");
-
-	
 }
 
 void display() {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glRotatef(1, 0, 1, 0);	
+	glRotatef(1, 0, 1, 0);
 
+	//Display HeightMap
+	{
 	glPushMatrix();
-	glTranslatef(-25,0,-25);
+	glTranslatef(-25, 0, -25);
 	heightMap.DrawMap(10, 50, texture);
 	glPopMatrix();
+	}
 
-
+	//Display ChessBoard
+	{
 	glPushMatrix();
 	glTranslatef(0, 7, 0);
-	glRotatef(90,1,0,0);
+	glRotatef(90, 1, 0, 0);
 	chessBoard.draw();
 	glPopMatrix();
+	}
 
 	glutSwapBuffers();
 
@@ -106,7 +107,7 @@ void display() {
 
 void timer(int) {
 	glutPostRedisplay();
-	glutTimerFunc(1000/60, timer, 0);
+	glutTimerFunc(1000/60, timer, 0);		//	Comment this if you want to pause
 }
 
 void updateCamera() {

@@ -10,6 +10,7 @@ private:
 	void drawGeometry() override;
 	void drawTiles();
 	void drawBoard();
+	void drawSide();
 	void drawBorder();
 	void drawCube(bool isBlack, int x, int y, float offset);
 	float heightOffset;

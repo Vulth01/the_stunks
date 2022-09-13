@@ -4,34 +4,19 @@
 #include <GL/glut.h>
 
 
-void ChessBoard::SetRandom() {
-	for (int x = 0; x < 8; x++)
-	{
-		for (int y = 0; y < 8; y++)
-		{
-			float ran = (rand() % 20 + 1);
-			nrandom[x][y] = (ran / 10);
-		}
-	}
-}
-
-
-void ChessBoard::ColourChange() {
-    bwColour = !bwColour;
-}
-
-
 void ChessBoard::drawGeometry() 
 {
+	//	Separated for simplicity
 	drawTiles();
 	drawBorder();
 }
-
 
 void ChessBoard::drawTiles() {
 	bool colourCheck = false;
 	float offset;
 
+	//	draws tiles 0-7
+	//	starts from -4 to center the board
 	for (int x = -4; x < 3; x++)
 	{
 		for (int y = -4; y < 3; y++)
@@ -43,6 +28,7 @@ void ChessBoard::drawTiles() {
 		}
 	}
 
+	//	draws 8th row 
 	for (int x = -4; x < 3; x++)
 	{
 		for (int y = 4; y < 5; y++)
@@ -53,6 +39,7 @@ void ChessBoard::drawTiles() {
 		}
 	}
 
+	//	draws 8th column 
 	for (int x = 4; x < 5; x++)
 	{
 		for (int y = -5; y < 3; y++)
@@ -64,47 +51,96 @@ void ChessBoard::drawTiles() {
 	}
 }
 
-void ChessBoard::drawBorder() {
+void ChessBoard::drawSide() {
+
+	//i like waffles (with syrup)
+
 	glBegin(GL_QUADS);
 	{
-
-		//10 - 8       6 - 8
+		glPushMatrix();
 		glColor3f(0.3f, 0.3f, 0.3f);
 
-		GLfloat BorderPos[8][8];
+		//back face
+		glVertex3f(-4, 1, -9);
+		glVertex3f(-4, 0, -9);
+		glVertex3f(-3, 0, -9);
+		glVertex3f(-3, 1, -9);
 
-		for (int x = 0; x < 8; x++)
-		{
-			for (int y = 0; y < 8; y++)
-			{
-				glVertex3f(BorderPos[x][y], BorderPos[x][y], BorderPos[x][y]);
-			}
-		}
+		//front face
+		glVertex3f(-3, 0, 9);
+		glVertex3f(-3, 1, 9);
+		glVertex3f(-4, 1, 9);
+		glVertex3f(-4, 0, 9);
 
-		glVertex3f(-10, -10, 5);
-		glVertex3f(-10, -8, 5);
-		glVertex3f(-8, -8, 5);
-		glVertex3f(-8, -10, 5);
+		//left face 
+		glVertex3f(-4, 1, 9);
+		glVertex3f(-4, 1, -9);
+		glVertex3f(-4, 0, -9);
+		glVertex3f(-4, 0, 9);
 
-		glVertex3f(6, 6, 6);
-		glVertex3f(6, 8, 6);
-		glVertex3f(8, 8, 6);
-		glVertex3f(8, 6, 6);
+		//right face
+		glVertex3f(-3, 1, 9);
+		glVertex3f(-3, 1, -9);
+		glVertex3f(-3, 0, -9);
+		glVertex3f(-3, 0, 9);
 
-		glVertex3f(-10, -10, 5);
-		glVertex3f(-10, -8, 5);
-		glVertex3f(-8, -8, 5);
-		glVertex3f(-8, -10, 5);
+		//top face
+		glVertex3f(-4, 1, 9);
+		glVertex3f(-4, 1, -9);
+		glVertex3f(-3, 1, -9);
+		glVertex3f(-3, 1, 9);
 
-		glVertex3f(6, 6, 6);
-		glVertex3f(6, 8, 6);
-		glVertex3f(8, 8, 6);
-		glVertex3f(8, 6, 6);
-
+		//bottom face
+		glVertex3f(-4, 0, 9);
+		glVertex3f(-4, 0, -9);
+		glVertex3f(-3, 0, -9);
+		glVertex3f(-3, 0, 9);
+		glPopMatrix();
 	}
+	glEnd();
+}
+
+void ChessBoard::drawBorder() {
+	
+	//side 1
+	glPushMatrix();
+	glRotatef(90,1,0,0);
+	glTranslatef(-6, 0, 1);
+	drawSide();
+	glPopMatrix();
+
+	//side 2
+	glPushMatrix();
+	glRotatef(90, 1, 0, 0);
+	glTranslatef(11, 0, 1);
+	drawSide();
+	glPopMatrix();
+
+	//side 3
+	glPushMatrix();
+	glRotatef(90, 1, 0, 0);
+	glPopMatrix();
+	glPushMatrix();
+	glRotatef(90, 0, 1, 0);
+	glTranslatef(3, 7, -1);
+	drawSide();
+	glPopMatrix();
+
+	//side 4
+	glPushMatrix();
+	glRotatef(90, 1, 0, 0);
+	glPopMatrix();
+	glPushMatrix();
+	glRotatef(90, 0, 1, 0);
+	glTranslatef(3, -10, -1);
+	drawSide();
+	glPopMatrix();
 }
 
 void ChessBoard::drawCube(bool isBlack, int x, int y, float offset) {
+
+	//original cube vertices
+
 	GLfloat verticeA[] = { -1, -1, -1 };
 	GLfloat verticeB[] = { 1, -1, -1, };
 	GLfloat verticeC[] = { 1, 1, -1 };
@@ -116,18 +152,21 @@ void ChessBoard::drawCube(bool isBlack, int x, int y, float offset) {
 
 	offset /= 2; //this is for it to be between 0 and 0.5 instead of 1
 
+
+	//drawing the cube
 	glBegin(GL_QUADS);
 	{
 		glPushMatrix();
 		int i = 0;
 		
-		//glColor3f(0.3f, 0.3f, 0.3f);
 
 		if (isBlack)
 			glColor3f(0,0,0);
 		else
 			glColor3f(1,1,1);
 
+
+		//vertices altered to create a cube in a new position
 
 		glVertex3f(verticeA[i] + x, verticeA[i + 1] + y, verticeA[i + 2] + offset);
 		glVertex3f(verticeB[i] + x, verticeB[i + 1] + y, verticeB[i + 2] + offset);
@@ -167,10 +206,28 @@ void ChessBoard::drawCube(bool isBlack, int x, int y, float offset) {
 		glPopMatrix();
 	}
 	glEnd();
-
 }
 
 void ChessBoard::drawBoard() {
     drawGeometry();
     glDisable(GL_DEPTH_TEST);
+}
+
+void ChessBoard::SetRandom() {
+	//	Sets the random values of each tile
+	//	Avoids the tiles changing constantly and being funky
+
+	for (int x = 0; x < 8; x++)
+	{
+		for (int y = 0; y < 8; y++)
+		{
+			float ran = (rand() % 20 + 1);
+			nrandom[x][y] = (ran / 10);
+		}
+	}
+}
+
+//	I don't actually use this but everything is working perfectly so I'm too scared to delete it
+void ChessBoard::ColourChange() {
+    bwColour = !bwColour;
 }
