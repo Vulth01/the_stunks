@@ -4,6 +4,19 @@
 #include <GL/glut.h>
 
 
+void ChessBoard::SetRandom() {
+	for (int x = 0; x < 8; x++)
+	{
+		for (int y = 0; y < 8; y++)
+		{
+			float ran = (rand() % 20 + 1);
+			nrandom[x][y] = (ran / 10);
+
+			std::cout << " ====Random Set==== : " << nrandom[x][y] << std::endl;
+		}
+	}
+}
+
 
 void ChessBoard::ColourChange() {
     bwColour = !bwColour;
@@ -21,7 +34,7 @@ void ChessBoard::drawGeometry()
 	{
 		for (int y = -4; y < 3; y++)
 		{
-			offset = (rand() % 2) + 1;
+			offset = nrandom[x+4][y+4];
 			//offset = 0;
 			drawCube(colourCheck, x * 2, y * 2, offset);
 			colourCheck = !colourCheck;
@@ -31,7 +44,7 @@ void ChessBoard::drawGeometry()
 	{
 		for (int y = 4; y < 5; y++)
 		{
-			offset = (rand() % 2) + 1;
+			offset = nrandom[x+4][y+4];
 			drawCube(colourCheck, (x * 2), (y * 2) - 2, offset);
 			colourCheck = !colourCheck;
 		}
@@ -40,7 +53,7 @@ void ChessBoard::drawGeometry()
 	{
 		for (int y = -5; y < 3; y++)
 		{
-			offset = (rand() % 2) + 1;
+			offset = nrandom[x+4][y+4];
 			colourCheck = !colourCheck;
 			drawCube(colourCheck, (x * 2) - 2, (y * 2) + 2, offset);
 		}
@@ -56,6 +69,16 @@ void ChessBoard::drawBorder() {
 
 		//10 - 8       6 - 8
 		glColor3f(0.3f, 0.3f, 0.3f);
+
+		GLfloat BorderPos[8][8];
+
+		for (int x = 0; x < 8; x++)
+		{
+			for (int y = 0; y < 8; y++)
+			{
+				glVertex3f(BorderPos[x][y], BorderPos[x][y], BorderPos[x][y]);
+			}
+		}
 
 		glVertex3f(-10, -10, 5);
 		glVertex3f(-10, -8, 5);

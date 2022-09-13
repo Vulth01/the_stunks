@@ -30,6 +30,9 @@ HeightMap heightMap;
 void init();
 void display();
 void timer(int);
+void updateCamera();
+void inputKeys(unsigned char key, int x, int y);
+int cameraPos;
 
 int main(int argc, char* argv[]) {
 
@@ -43,10 +46,11 @@ int main(int argc, char* argv[]) {
 	glutInitWindowPosition(windowX, windowY);
 	glutInitWindowSize(WIDTH, HEIGHT);
 	glutCreateWindow("My First Window");
+	chessBoard.SetRandom();
 
 	glutDisplayFunc(display);
 	glutTimerFunc(0, timer, 0);
-
+	//glutKeyboardFunc(inputKeys);
 	init();
 	glutMainLoop();
 	
@@ -64,9 +68,9 @@ void init() {
 	//glOrtho(0, WIDTH, HEIGHT, 0,0,1);
 	gluPerspective(50.0, (double)WIDTH / (double)HEIGHT, 1.0, 1000.0);
 
-
+	//updateCamera();
 	gluLookAt(
-		40, 0, 100,
+		0, 0, 40,
 		0, 0, 0,
 		0, -1, 0
 	);
@@ -85,27 +89,22 @@ void init() {
 void display() {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//texture->use();
-	//gObject.draw();
-	//gameObject.draw();
-	//rainbowCube.draw();
-	
 	glRotatef(3, 10, 10, 0);	
 	
-	for (int x = 0; x < 8; x++)
+	for (int x = 0; x <= 8; x++)
 	{
-		for (int y = 0; y < 8; y++)
+		for (int y = 0; y <= 8; y++)
 		{
 			Pixel p = texture->getPixelAt(x, y);
 			//cout << p.r << ", " << p.g << ", " << p.b << ", " << p.a << endl;
 			/*cout << "x - " << x << endl;
 			cout << "y - " << y << endl;
 			cout << "height - " << p.r << endl;*/
-			//heightMap.DrawMap(x, y, (float)p.r);
+			heightMap.DrawMap(x, y, (float)p.r);
+			//terrainQuads.SetCoords(x,y,(float)p.r);
 		}
 	}
-	chessBoard.draw();
+	//chessBoard.draw();
 
 	glutSwapBuffers();
 
@@ -114,4 +113,36 @@ void display() {
 void timer(int) {
 	glutPostRedisplay();
 	//glutTimerFunc(1000/60, timer, 0);
+}
+
+
+void updateCamera() {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	double eyeX = 0;
+	if (cameraPos == 0)
+	{
+		eyeX = -5; 
+	}
+	if (cameraPos == 2)
+	{
+		eyeX = 5;
+	}
+
+	gluLookAt(
+		0, 0, 8,
+		eyeX,0,0,
+		0, 1, 0
+	);
+}
+
+void inputKeys(unsigned char key, int x, int y) {
+	if (key == 'a')	cameraPos--;
+	if (key == 'd')	cameraPos++;
+	
+	if (cameraPos > 2) cameraPos = 0;
+	if (cameraPos < 0) cameraPos = 2;
+
+	cout << "cameraPos: " << cameraPos << endl;
 }
