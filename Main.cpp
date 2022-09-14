@@ -55,8 +55,8 @@ int main(int argc, char* argv[]) {
 	glutTimerFunc(0, timer, 0);
 	//glutKeyboardFunc(inputKeys);
 
-	int c = getch();
-	inputKeys(c);
+	//camera = getchar();
+	//inputKeys(c);
 
 	init();
 	glutMainLoop();
@@ -74,14 +74,14 @@ void init() {
 	//glOrtho(0, WIDTH, HEIGHT, 0,0,1);
 	gluPerspective(50.0, (double)WIDTH / (double)HEIGHT, 1.0, 1000.0);
 
-	updateCamera();
+	//updateCamera();
 	gluLookAt(
-		0, 30, 50,
+		0, 20, 30,
 		0, 0, 0,
 		0, 1, 0
 	);
 
-	camera = new CameraController();
+	//camera = new CameraController();
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	texture = new Texture("Textures/cloudimage.png");
 }
@@ -94,15 +94,14 @@ void display() {
 	//Display HeightMap
 	{
 	glPushMatrix();
-	glTranslatef(-25, 0, -25);
-	heightMap.DrawMap(10, 50, texture);
+	heightMap.DrawMap(15, 100, texture);
 	glPopMatrix();
 	}
 
 	//Display ChessBoard
 	{
 	glPushMatrix();
-	glTranslatef(0, 7, 0);
+	glTranslatef(0, 0.5f, 0);
 	glRotatef(90, 1, 0, 0);
 	chessBoard.draw();
 	glPopMatrix();

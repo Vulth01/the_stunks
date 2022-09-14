@@ -7,11 +7,16 @@
 void ChessBoard::drawGeometry() 
 {
 	//	Separated for simplicity
+	
+	glPushMatrix();
+	glScalef(0.5f, 0.5f, 0.5f);
 	drawTiles();
 	drawBorder();
+	glPopMatrix();
 }
 
 void ChessBoard::drawTiles() {
+
 	bool colourCheck = false;
 	float offset;
 
@@ -98,6 +103,8 @@ void ChessBoard::drawSide() {
 		glPopMatrix();
 	}
 	glEnd();
+
+
 }
 
 void ChessBoard::drawBorder() {

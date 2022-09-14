@@ -5,7 +5,15 @@
 #include <random>
 #include "Texture.h"
 
+
+
+
+
 void HeightMap::DrawMap(float maxHeight, float size, Texture* texture) {
+
+	glPushMatrix();
+
+	glTranslatef(-size / 2.0, 0, -size/ 2.0);
 
 	texture = new Texture("Textures/cloudimage.png");
 	for (int y = 0; y < height - 1; y++)
@@ -19,23 +27,22 @@ void HeightMap::DrawMap(float maxHeight, float size, Texture* texture) {
 			Pixel p3 = texture->getPixelAt(x + 1, y);
 			Pixel p4 = texture->getPixelAt(x + 1, y + 1);
 
-
+			float vy1 = p1.r * maxHeight;
 			float vx1 = (float)x / (float)width * size;
 			float vz1 = (float)y/ (float)height * size;
-			float vy1 = p1.r * maxHeight;
 
+			float vy2 = p2.r * maxHeight;
 			float vx2 = (float)x / (float)width * size;
 			float vz2 = (float)(y + 1) / (float)height * size;
-			float vy2 = p2.r * maxHeight;
 
+			float vy3 = p3.r * maxHeight;
 			float vx3 = (float)(x + 1) / (float)width * size;
 			float vz3 = (float)y/ (float)height * size;
-			float vy3 = p3.r * maxHeight;
 
+			float vy4 = p4.r * maxHeight;
 			float vx4 = (float)(x + 1) / (float)width * size;
 			float vz4 = (float)(y + 1) / (float)height * size;
-			float vy4 = p4.r * maxHeight;
-
+			
 
 			glBegin(GL_TRIANGLE_STRIP);
 			{
@@ -54,4 +61,7 @@ void HeightMap::DrawMap(float maxHeight, float size, Texture* texture) {
 			glEnd();
 		}
 	}
+
+	glPopMatrix();
+
 }
