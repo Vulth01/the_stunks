@@ -31,6 +31,7 @@ TexturedCube gObject;
 ChessBoard chessBoard;
 HeightMap heightMap;
 
+void input(int key, int x, int y);
 void init();
 void display();
 void timer(int);
@@ -58,6 +59,7 @@ int main(int argc, char* argv[]) {
 	chessBoard.SetRandom(); //Sets the offset for each chess tile
 
 	glutDisplayFunc(display);
+	glutSpecialFunc(input);
 	glutTimerFunc(0, timer, 0);
 	init();
 	glutMainLoop();
@@ -127,14 +129,15 @@ void updateCamera() {
 
 	if (!isPressed)
 	{
-		if (GetKeyState('D') & 0x8000)
+		if (GetKeyState(GLUT_KEY_RIGHT) & 0x8000)
 		{
 			cout << "D" << endl;
 			isPressed = true;
 			cameraPos--;
 		}
-		else if (GetKeyState('A') & 0x8000)
+		else if (GetKeyState(GLUT_KEY_LEFT) & 0x8000)
 		{
+			
 			cout << "A" << endl;
 			isPressed = true;
 			cameraPos++;
@@ -163,6 +166,48 @@ void updateCamera() {
 	gluLookAt(
 		0, 0, 5,
 		eyeX,0,0,
+		0, 1, 0
+	);
+}
+
+void input(int key, int x, int y) {
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	double eyeX = 0;
+
+
+	if (key == (GLUT_KEY_RIGHT))
+	{
+		cout << "D" << endl;
+		isPressed = true;
+		cameraPos--;
+	}
+	else if (key == (GLUT_KEY_LEFT))
+	{
+
+		cout << "A" << endl;
+		isPressed = true;
+		cameraPos++;
+	}
+
+	//Check cameraPos
+	{
+		if (cameraPos > 2) cameraPos = 0;
+		if (cameraPos < 0) cameraPos = 2;
+		if (cameraPos == 0)
+		{
+			eyeX = -5;
+		}
+		if (cameraPos == 2)
+		{
+			eyeX = 5;
+		}
+	}
+
+	gluLookAt(
+		0, 0, 5,
+		eyeX, 0, 0,
 		0, 1, 0
 	);
 }
