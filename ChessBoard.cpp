@@ -233,8 +233,3 @@ void ChessBoard::SetRandom() {
 		}
 	}
 }
-
-//	I don't actually use this but everything is working perfectly so I'm too scared to delete it
-void ChessBoard::ColourChange() {
-    bwColour = !bwColour;
-}
