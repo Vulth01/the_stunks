@@ -8,6 +8,7 @@
 #include "TexturedCube.h"
 #include "ChessBoard.h"
 #include "HeightMap.h"
+#include <Windows.h>
 
 
 //STB
@@ -34,30 +35,30 @@ void init();
 void display();
 void timer(int);
 void updateCamera();
-void inputKeys(unsigned char key, int x, int y);
 int cameraPos;
 
+bool isPressed = false;
+
+//Initial Calls + Window Setup
 int main(int argc, char* argv[]) {
 
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GL_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-
-	int windowX = (int)(glutGet(GLUT_SCREEN_WIDTH) - WIDTH) / 2;
-	int windowY = (int)(glutGet(GLUT_SCREEN_HEIGHT) - HEIGHT) / 2; 
 	
-	glutInitWindowPosition(windowX, windowY);
-	glutInitWindowSize(WIDTH, HEIGHT);
-	glutCreateWindow("My First Window");
-	chessBoard.SetRandom();
+	//Window initialising
+	{
+		int windowX = (int)(glutGet(GLUT_SCREEN_WIDTH) - WIDTH) / 2;
+		int windowY = (int)(glutGet(GLUT_SCREEN_HEIGHT) - HEIGHT) / 2;
+		glutInitWindowPosition(windowX, windowY);
+		glutInitWindowSize(WIDTH, HEIGHT);
+		glutCreateWindow("My First Window");
+	}
+
+	chessBoard.SetRandom(); //Sets the offset for each chess tile
 
 	glutDisplayFunc(display);
 	glutTimerFunc(0, timer, 0);
-	//glutKeyboardFunc(inputKeys);
-
-	//camera = getchar();
-	//inputKeys(c);
-
 	init();
 	glutMainLoop();
 	
@@ -66,6 +67,7 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 
+//Change Initial Camera View + Texture
 void init() {
 	glEnable(GL_DEPTH_TEST);
 
@@ -76,18 +78,19 @@ void init() {
 
 	//updateCamera();
 	gluLookAt(
-		0, 20, 30,
+		0, 30, 50,
 		0, 0, 0,
 		0, 1, 0
 	);
 
-	//camera = new CameraController();
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	texture = new Texture("Textures/cloudimage.png");
+	//texture = new Texture("Textures/wolfram.png");
 }
 
 void display() {
 
+	updateCamera();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glRotatef(1, 0, 1, 0);
 
@@ -119,39 +122,47 @@ void timer(int) {
 void updateCamera() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
 	double eyeX = 0;
-	if (cameraPos == 0)
+
+
+	if (!isPressed)
 	{
-		eyeX = -5; 
+		if (GetKeyState('D') & 0x8000)
+		{
+			cout << "D" << endl;
+			isPressed = true;
+			cameraPos--;
+		}
+		else if (GetKeyState('A') & 0x8000)
+		{
+			cout << "A" << endl;
+			isPressed = true;
+			cameraPos++;
+		}
 	}
-	if (cameraPos == 2)
+	else
 	{
-		eyeX = 5;
+		Sleep(500);
+		isPressed = false;
+	}
+
+	//Check cameraPos
+	{
+		if (cameraPos > 2) cameraPos = 0;
+		if (cameraPos < 0) cameraPos = 2;
+		if (cameraPos == 0)
+		{
+			eyeX = -5; 
+		}
+		if (cameraPos == 2)
+		{
+			eyeX = 5;
+		}
 	}
 
 	gluLookAt(
-		0, 0, 8,
+		0, 0, 5,
 		eyeX,0,0,
 		0, 1, 0
 	);
-}
-
-/*void inputKeys(unsigned char key, int x, int y) {
-	if (key == 'a')	cameraPos--;
-	if (key == 'd')	cameraPos++;
-	
-	if (cameraPos > 2) cameraPos = 0;
-	if (cameraPos < 0) cameraPos = 2;
-
-	cout << "cameraPos: " << cameraPos << endl;*/
-
-	void inputKeys(int key) {
-	if (key == LEFT_ARROW)	cameraPos--;
-	if (key == RIGHT_ARROW)	cameraPos++;
-	
-	if (cameraPos > 2) cameraPos = 0;
-	if (cameraPos < 0) cameraPos = 2;
-
-	cout << "cameraPos: " << cameraPos << endl;
 }

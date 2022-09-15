@@ -5,17 +5,11 @@
 #include <random>
 #include "Texture.h"
 
-
-
-
-
 void HeightMap::DrawMap(float maxHeight, float size, Texture* texture) {
 
 	glPushMatrix();
-
 	glTranslatef(-size / 2.0, 0, -size/ 2.0);
 
-	texture = new Texture("Textures/cloudimage.png");
 	for (int y = 0; y < height - 1; y++)
 	{
 		for (int x = 0; x  < width - 1; x ++)
@@ -63,5 +57,4 @@ void HeightMap::DrawMap(float maxHeight, float size, Texture* texture) {
 	}
 
 	glPopMatrix();
-
 }
