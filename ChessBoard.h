@@ -15,6 +15,7 @@ private:
 	void drawCube(bool isBlack, int x, int y, float offset);
 	float heightOffset;
 	bool ChangeColour;
-	void ColourChange();
 	bool bwColour;
 };
+
+
