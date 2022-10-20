@@ -6,7 +6,7 @@
 
 void Pawn::drawGeometry(float scale, float x, float y, float z)
 {
-	drawBody(scale,x,y,z);
+	drawBody(scale, x, y, z);
 }
 
 
@@ -16,7 +16,7 @@ void Pawn::drawBody(float scale, float x, float y, float z)
 	drawBase(scale);
 
 	glColor3f(1,0, 1);
-
+	
 	glScalef(scale,scale,scale);
 	glTranslatef(x,y,z);
 

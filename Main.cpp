@@ -11,13 +11,6 @@
 #include <Windows.h>
 
 #include "ChessPiece.h"
-#include "King.h"
-#include "Queen.h"
-#include "Rook.h"
-#include "Bishop.h"
-#include "Knight.h"
-#include "Pawn.h"
-
 //STB
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -39,12 +32,6 @@ ChessBoard chessBoard;
 HeightMap heightMap;
 
 ChessPiece chessPiece;
-King king;
-Queen queen;
-Bishop bishop;
-Knight knight;
-Rook rook;
-Pawn pawn;
 
 
 void input(int key, int x, int y);
@@ -91,20 +78,15 @@ void init() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//glOrtho(0, WIDTH, HEIGHT, 0,0,1);
 	gluPerspective(50.0, (double)WIDTH / (double)HEIGHT, 1.0, 1000.0);
-
-	//updateCamera();
 	gluLookAt(
-		//0, 30, 50,
-		0, 30/3, 50/3,
+		0, 30/7, 50/7,
 		0, 0, 0,
 		0, 1, 0
 	);
 
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	texture = new Texture("Textures/cloudimage.png");
-	//texture = new Texture("Textures/wolfram.png");
 }
 
 void display() {
@@ -125,7 +107,7 @@ void display() {
 		glPushMatrix();
 		glTranslatef(0, 0.5f, 0);
 		glRotatef(90, 1, 0, 0);
-		chessBoard.draw();
+		//chessBoard.draw();
 		glPopMatrix();
 	}
 
@@ -135,16 +117,6 @@ void display() {
 		chessPiece.placePieces();
 		glPopMatrix();
 	}
-
-
-	//Display Pawn Piece
-	{
-		glPushMatrix();
-		pawn.drawBody(0.12,0, 7, 17);
-		glPopMatrix();
-	}
-
-
 
 	glutSwapBuffers();
 
