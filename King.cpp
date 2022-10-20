@@ -9,7 +9,6 @@ void King::drawGeometry(float scale, float x, float y, float z)
 	drawBody(scale, x, y, z);
 }
 
-
 void King::drawBody(float scale, float x, float y, float z)
 {
 	glTranslatef(x, y, z);
@@ -217,7 +216,6 @@ void King::drawBody(float scale, float x, float y, float z)
 
 }
 
-
 void King::drawBase(float scale)
 {
 	//Draw cylinder
@@ -296,9 +294,6 @@ void King::drawBase(float scale)
 	}
 	glPopMatrix();
 }
-
-
-
 
 void King::drawCube(float scale) {
 

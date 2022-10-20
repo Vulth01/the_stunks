@@ -3,7 +3,6 @@
 #include <iostream>
 #include <GL/glut.h>
 
-
 #include "Pawn.h"
 #include "King.h"
 #include "Queen.h"
@@ -24,51 +23,25 @@ Pawn pawn;
 
 void ChessPiece::placePieces()
 {
-	//Display Pawn Piece
+	//Display each piece
 	{
 		glPushMatrix();
-		king.drawBody(0.12, 0, 0, 2);
-		pawn.drawBody(0.12, 0, 0, 0);
-		//pawn.drawBody(0.12, 0, 7, 17);
+		
+		king.drawBody(0.12, 0, 0.15, 1);
+		
+		pawn.drawBody(0.12, 0, 7, 10);
+		
+		queen.drawBody(1, -8, -7, -10);
+
+		bishop.drawBody(1, -9, 0, 0);
+		bishop.drawBody(1, (8 * 3) +1, 0, 0);
+
+		knight.drawBody(1, +8, 0, 0);
+		knight.drawBody(1, -8*5, 0, 0);
+		
+		rook.drawBody(1, -8, 0, 0);
+		rook.drawBody(1, 8*7, 2, 0);
+
 		glPopMatrix();
 	}
-	
-
-	////Display king Piece
-	//{
-	//	glPushMatrix();
-	//	
-	//	glPopMatrix();
-	//}
-
-	////Display queen Piece
-	//{
-	//	glPushMatrix();
-	//	queen.drawBody(0, 0, 0, 0);
-	//	glPopMatrix();
-	//}
-
-	////Display bishop Piece
-	//{
-	//	glPushMatrix();
-	//	bishop.drawBody(0, 0, 0, 0);
-	//	glPopMatrix();
-	//}
-
-	////Display knight Piece
-	//{
-	//	glPushMatrix();
-	//	knight.drawBody(0, 0, 0, 0);
-	//	glPopMatrix();
-	//}
-
-	////Display rook Piece
-	//{
-	//	glPushMatrix();
-	//	rook.drawBody(0, 0, 0, 0);
-	//	glPopMatrix();
-	//}
-
-
-
 }

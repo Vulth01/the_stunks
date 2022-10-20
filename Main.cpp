@@ -80,7 +80,7 @@ void init() {
 	glLoadIdentity();
 	gluPerspective(50.0, (double)WIDTH / (double)HEIGHT, 1.0, 1000.0);
 	gluLookAt(
-		0, 30/7, 50/7,
+		0, 30/5, 50/7,
 		0, 0, 0,
 		0, 1, 0
 	);

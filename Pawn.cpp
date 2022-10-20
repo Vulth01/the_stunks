@@ -9,7 +9,6 @@ void Pawn::drawGeometry(float scale, float x, float y, float z)
 	drawBody(scale, x, y, z);
 }
 
-
 void Pawn::drawBody(float scale, float x, float y, float z)
 {
 
@@ -110,7 +109,7 @@ void Pawn::drawBase(float scale)
 	glPushMatrix();
 	{
 		glScalef(scale, scale, scale);
-		glTranslatef(0, 7, 17);
+		glTranslatef(0, 7, 10);
 		
 		glRotatef(90, 90, 0, 0);
 

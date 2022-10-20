@@ -11,7 +11,8 @@ void Rook::drawGeometry(float scale, float x, float y, float z)
 
 void Rook::drawBody(float scale, float x, float y, float z)
 {
-
+	glTranslatef(x, y, z);
+	drawBase(scale);
 }
 
 
