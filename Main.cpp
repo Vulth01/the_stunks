@@ -10,6 +10,13 @@
 #include "HeightMap.h"
 #include <Windows.h>
 
+#include "ChessPiece.h"
+#include "King.h"
+#include "Queen.h"
+#include "Rook.h"
+#include "Bishop.h"
+#include "Knight.h"
+#include "Pawn.h"
 
 //STB
 #define STB_IMAGE_IMPLEMENTATION
@@ -30,6 +37,15 @@ Texture* texture;
 TexturedCube gObject;
 ChessBoard chessBoard;
 HeightMap heightMap;
+
+ChessPiece chessPiece;
+King king;
+Queen queen;
+Bishop bishop;
+Knight knight;
+Rook rook;
+Pawn pawn;
+
 
 void input(int key, int x, int y);
 void init();
@@ -80,7 +96,8 @@ void init() {
 
 	//updateCamera();
 	gluLookAt(
-		0, 30, 50,
+		//0, 30, 50,
+		0, 30/3, 50/3,
 		0, 0, 0,
 		0, 1, 0
 	);
@@ -97,20 +114,37 @@ void display() {
 	glRotatef(1, 0, 1, 0);
 
 	//Display HeightMap
-	{
-	glPushMatrix();
-	heightMap.DrawMap(15, 100, texture);
-	glPopMatrix();
-	}
+	/*{
+		glPushMatrix();
+		heightMap.DrawMap(15, 100, texture);
+		glPopMatrix();
+	}*/
 
 	//Display ChessBoard
 	{
-	glPushMatrix();
-	glTranslatef(0, 0.5f, 0);
-	glRotatef(90, 1, 0, 0);
-	chessBoard.draw();
-	glPopMatrix();
+		glPushMatrix();
+		glTranslatef(0, 0.5f, 0);
+		glRotatef(90, 1, 0, 0);
+		chessBoard.draw();
+		glPopMatrix();
 	}
+
+	//Display Chess Pieces
+	{
+		glPushMatrix();
+		chessPiece.placePieces();
+		glPopMatrix();
+	}
+
+
+	//Display Pawn Piece
+	{
+		glPushMatrix();
+		pawn.drawBody(0.12,0, 7, 17);
+		glPopMatrix();
+	}
+
+
 
 	glutSwapBuffers();
 

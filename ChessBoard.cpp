@@ -233,5 +233,3 @@ void ChessBoard::SetRandom() {
 		}
 	}
 }
-
-
