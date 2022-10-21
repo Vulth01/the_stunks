@@ -80,7 +80,7 @@ void init() {
 	glLoadIdentity();
 	gluPerspective(50.0, (double)WIDTH / (double)HEIGHT, 1.0, 1000.0);
 	gluLookAt(
-		0, 30/5, 50/7,
+		0, 30/1, 50/1,
 		0, 0, 0,
 		0, 1, 0
 	);
@@ -96,18 +96,18 @@ void display() {
 	glRotatef(1, 0, 1, 0);
 
 	//Display HeightMap
-	/*{
+	{
 		glPushMatrix();
 		heightMap.DrawMap(15, 100, texture);
 		glPopMatrix();
-	}*/
+	}
 
 	//Display ChessBoard
 	{
 		glPushMatrix();
 		glTranslatef(0, 0.5f, 0);
 		glRotatef(90, 1, 0, 0);
-		//chessBoard.draw();
+		chessBoard.draw();
 		glPopMatrix();
 	}
 

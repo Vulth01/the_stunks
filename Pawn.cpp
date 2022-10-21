@@ -143,7 +143,6 @@ void Pawn::drawBase(float scale)
 
 		glBegin(GL_QUAD_STRIP);
 		{
-
 			glVertex3f(-1, 3, 0);			
 			glVertex3f(-1, 3, 1);
 

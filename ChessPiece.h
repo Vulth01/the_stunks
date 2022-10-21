@@ -6,6 +6,5 @@ private:
 
 public:
 	void placePieces();
-
 };
 
