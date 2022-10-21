@@ -14,7 +14,6 @@ void Queen::drawBody(float scale, float x, float y, float z)
 	glTranslatef(x, y, z);
 	drawBase(scale);
 
-	glColor3f(0, 0, 1);
 	//Draw cylinder (2)
 	glPushMatrix();
 	{
@@ -87,7 +86,6 @@ void Queen::drawBody(float scale, float x, float y, float z)
 	}
 	glPopMatrix();
 
-	glColor3f(0, 1, 0);
 	//Draw cylinder (3)
 	glPushMatrix();
 	{
@@ -200,13 +198,16 @@ void Queen::drawBody(float scale, float x, float y, float z)
 	//Draw top cubes
 	glPushMatrix();
 	{
-		glTranslatef(0, 21,15.6);
-		drawCube(0.3);
-		glTranslatef(3.8, 0, 3.8);
+		glTranslatef(0,2.53,1.9);
+		drawCube(0.05);
+		
+		glTranslatef(3,0,3);
 		drawCube(1);
-		glTranslatef(-3.8 * 2, 0, 0);
+		
+		glTranslatef(-3, 0, 3);
 		drawCube(1);
-		glTranslatef(3.8, 0, 3.8);
+		
+		glTranslatef(-3, 0, -3);
 		drawCube(1);
 	}
 	glPopMatrix();
@@ -217,7 +218,6 @@ void Queen::drawBase(float scale)
 {
 	//Draw cylinder
 
-	glColor3f(1, 0, 1);
 	glPushMatrix();
 	{
 		glScalef(scale, scale, scale);

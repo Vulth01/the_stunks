@@ -24,6 +24,9 @@ using namespace std;
 static const int WIDTH = 800;
 static const int HEIGHT = 600;
 
+
+//Texture* terrainTexture = new Texture("Textures/terrain_texture.png");
+Texture* terrainTexture = new Texture("Textures/grass_block_side.png");
 GameObject gameObject;
 RainbowCube rainbowCube;
 Texture* texture;
@@ -80,13 +83,14 @@ void init() {
 	glLoadIdentity();
 	gluPerspective(50.0, (double)WIDTH / (double)HEIGHT, 1.0, 1000.0);
 	gluLookAt(
-		0, 30/1, 50/1,
+		0, 30/2, 50/2,
 		0, 0, 0,
 		0, 1, 0
 	);
 
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	texture = new Texture("Textures/cloudimage.png");
+
 }
 
 void display() {
@@ -98,6 +102,7 @@ void display() {
 	//Display HeightMap
 	{
 		glPushMatrix();
+		terrainTexture->use();
 		heightMap.DrawMap(15, 100, texture);
 		glPopMatrix();
 	}
@@ -111,10 +116,17 @@ void display() {
 		glPopMatrix();
 	}
 
+
 	//Display Chess Pieces
 	{
 		glPushMatrix();
 		chessPiece.placePieces();
+		glPopMatrix();
+	}
+	//Animate Chess Pieces
+	{
+		glPushMatrix();
+		chessPiece.animatePieces();
 		glPopMatrix();
 	}
 

@@ -16,6 +16,5 @@ private:
 	float heightOffset;
 	bool ChangeColour;
 	bool bwColour;
+
 };
-
-

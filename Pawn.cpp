@@ -12,10 +12,8 @@ void Pawn::drawGeometry(float scale, float x, float y, float z)
 void Pawn::drawBody(float scale, float x, float y, float z)
 {
 
-	drawBase(scale);
+	drawBase(scale,x,y,z);
 
-	glColor3f(1,0, 1);
-	
 	glScalef(scale,scale,scale);
 	glTranslatef(x,y,z);
 
@@ -101,15 +99,14 @@ void Pawn::drawBody(float scale, float x, float y, float z)
 
 }
 
-void Pawn::drawBase(float scale)
+void Pawn::drawBase(float scale, float x, float y, float z)
 {
 	//Draw cylinder
 
-	glColor3f(1, 0,1);
 	glPushMatrix();
 	{
 		glScalef(scale, scale, scale);
-		glTranslatef(0, 7, 10);
+		glTranslatef(x,y,z);
 		
 		glRotatef(90, 90, 0, 0);
 
@@ -173,4 +170,12 @@ void Pawn::drawBase(float scale)
 		glEnd();
 	}
 	glPopMatrix();
+}
+
+void Pawn::animatePiece(float x, float y, float z)
+{
+
+	//glTranslatef()
+
+
 }

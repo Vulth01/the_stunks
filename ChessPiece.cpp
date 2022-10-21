@@ -12,79 +12,211 @@
 
 
 
-King king;
-Queen queen;
-Bishop bishop;
-Knight knight;
-Rook rook;
-Pawn pawn;
 
+Rook w_rook1;
+Knight w_knight1;
+Bishop w_bishop1;
+Queen w_queen;
+King w_king;
+Bishop w_bishop2;
+Knight w_knight2;
+Rook w_rook2;
+
+Pawn w_pawn1;
+Pawn w_pawn2;
+Pawn w_pawn3;
+Pawn w_pawn4;
+Pawn w_pawn5;
+Pawn w_pawn6;
+Pawn w_pawn7;
+Pawn w_pawn8;
+
+
+
+Rook b_rook1;
+Knight b_knight1;
+Bishop b_bishop1;
+Queen b_queen;
+King b_king;
+Bishop b_bishop2;
+Knight b_knight2;
+Rook b_rook2;
+
+Pawn b_pawn1;
+Pawn b_pawn2;
+Pawn b_pawn3;
+Pawn b_pawn4;
+Pawn b_pawn5;
+Pawn b_pawn6;
+Pawn b_pawn7;
+Pawn b_pawn8;
 
 
 void ChessPiece::placePieces()
 {
 	//Display light pieces
 	{
+		glTranslatef(0, 0.2, 0);
+		glColor3f(0.7,0.5,0);
+		float scale = 0.12;
+
+
+		//King
 		glPushMatrix();
-		
-		king.drawBody(0.12, 0, 0.15, 1);
-		pawn.drawBody(0.12, 0, 7, 10);
-		
-		queen.drawBody(1, -8, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-
-		bishop.drawBody(1, -9, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-		
-		bishop.drawBody(1, ((8 * 3) +1), -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-		
-		knight.drawBody(1, +8, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);		
-		
-		knight.drawBody(1, -8*5, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-
-		rook.drawBody(1, -8, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-
-		rook.drawBody(1, 8*7, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-
+		w_king.drawBody(scale, 0, 0.1, 1);
 		glPopMatrix();
+		glPushMatrix();		
+		w_pawn1.drawBody(scale,0,7,15);
+		glPopMatrix();
+
+
+		//King's Bishop
+		glPushMatrix();
+		w_bishop1.drawBody(scale, 1, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		w_pawn3.drawBody(scale, 8, 7, 15);
+		glPopMatrix();
+
+		//King's Knight
+		glPushMatrix();
+		w_knight1.drawBody(scale, 2, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		w_pawn5.drawBody(scale, 16, 7, 15);
+		glPopMatrix();
+
+		//King's Rook
+		glPushMatrix();
+		w_rook2.drawBody(scale, 3, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		w_pawn8.drawBody(scale, 24, 7, 15);
+		glPopMatrix();
+
+
+
+		//Queen
+		glPushMatrix();
+		w_queen.drawBody(scale, -1, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		w_pawn2.drawBody(scale, -8, 7, 15);
+		glPopMatrix();
+		
+		//Queen's Bishop
+		glPushMatrix();
+		w_bishop2.drawBody(scale, -2, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		w_pawn4.drawBody(scale, -16,7,15);
+		glPopMatrix();
+
+		//Queen's Knight
+		glPushMatrix();
+		w_knight2.drawBody(scale, -3, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		w_pawn6.drawBody(scale, -24, 7, 15);
+		glPopMatrix();		
+		
+		//Queen's Rook
+		glPushMatrix();
+		w_rook1.drawBody(scale, -4, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		w_pawn7.drawBody(scale, -32, 7, 15);
+		glPopMatrix();
+
 	}
+
+
 
 	//Display dark pieces
 	{
+		glRotatef(180, 0, 180, 0);
+		glTranslatef(1, 0.2, 1);
+		glColor3f(0, 0.8, 0.8);
+		float scale = 0.12;
+
+
+		//King
 		glPushMatrix();
-		glRotatef(180,0,180,0);
-		glTranslatef(1,0,1);
-
-		king.drawBody(0.12, 0, 0.15, 1);
-		pawn.drawBody(0.12, 0, 7, 10);
-
-		queen.drawBody(1, -8, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-
-		bishop.drawBody(1, -9, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-
-		bishop.drawBody(1, ((8 * 3) + 1), -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-
-		knight.drawBody(1, +8, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-
-		knight.drawBody(1, -8 * 5, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-
-		rook.drawBody(1, -8, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-
-		rook.drawBody(1, 8 * 7, -7, -10);
-		pawn.drawBody(1, 0, 7, 10);
-
+		b_king.drawBody(scale, 0, 0.1, 1);
 		glPopMatrix();
+		glPushMatrix();
+		b_pawn1.drawBody(scale, 0, 7, 15);
+		glPopMatrix();
+
+
+		//King's Bishop
+		glPushMatrix();
+		b_bishop1.drawBody(scale, 1, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		b_pawn3.drawBody(scale, 8, 7, 15);
+		glPopMatrix();
+
+		//King's Knight
+		glPushMatrix();
+		b_knight1.drawBody(scale, 2, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		b_pawn5.drawBody(scale, 16, 7, 15);
+		glPopMatrix();
+
+		//King's Rook
+		glPushMatrix();
+		b_rook2.drawBody(scale, 3, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		b_pawn8.drawBody(scale, 24, 7, 15);
+		glPopMatrix();
+
+
+
+		//Queen
+		glPushMatrix();
+		b_queen.drawBody(scale, -1, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		b_pawn2.drawBody(scale, -8, 7, 15);
+		glPopMatrix();
+
+		//Queen's Bishop
+		glPushMatrix();
+		b_bishop2.drawBody(scale, -2, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		b_pawn4.drawBody(scale, -16, 7, 15);
+		glPopMatrix();
+
+		//Queen's Knight
+		glPushMatrix();
+		b_knight2.drawBody(scale, -3, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		b_pawn6.drawBody(scale, -24, 7, 15);
+		glPopMatrix();
+
+		//Queen's Rook
+		glPushMatrix();
+		b_rook1.drawBody(scale, -4, 0.1, 1);
+		glPopMatrix();
+		glPushMatrix();
+		b_pawn7.drawBody(scale, -32, 7, 15);
+		glPopMatrix();
+
 	}
+
+
+}
+
+
+void ChessPiece::animatePieces() 
+{
+	b_pawn5.animatePiece(0,0,0);
+
+
 
 }

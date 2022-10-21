@@ -13,7 +13,6 @@ void King::drawBody(float scale, float x, float y, float z)
 {
 	glTranslatef(x, y, z);
 	drawBase(scale);
-	glColor3f(0, 0, 1);
 	//Draw cylinder (2)
 	glPushMatrix();
 	{
@@ -86,7 +85,6 @@ void King::drawBody(float scale, float x, float y, float z)
 	}
 	glPopMatrix();
 
-	glColor3f(0, 1, 0);
 	//Draw cylinder (3)
 	glPushMatrix();
 	{
@@ -164,7 +162,6 @@ void King::drawBody(float scale, float x, float y, float z)
 		//1
 		glPushMatrix();
 		{
-			glColor3f(0, 1, 0);
 			glTranslatef(0, 2.5, 2);
 			drawCube(0.05);
 		}
@@ -172,7 +169,6 @@ void King::drawBody(float scale, float x, float y, float z)
 		//2
 		glPushMatrix();
 		{
-			glColor3f(0, 1, 0);
 			glTranslatef(0, 2.6, 2);
 			drawCube(0.05);
 		}
@@ -180,7 +176,6 @@ void King::drawBody(float scale, float x, float y, float z)
 		//3
 		glPushMatrix();
 		{
-			glColor3f(0, 1, 0);
 			glTranslatef(0, 2.7, 2);
 			drawCube(0.05);
 		}
@@ -188,7 +183,6 @@ void King::drawBody(float scale, float x, float y, float z)
 		//4
 		glPushMatrix();
 		{
-			glColor3f(0, 1, 0);
 			glTranslatef(0, 2.8, 2);
 			drawCube(0.05);
 		}
@@ -199,7 +193,6 @@ void King::drawBody(float scale, float x, float y, float z)
 	{
 		glPushMatrix();
 		{
-			glColor3f(0, 1, 0);
 			glTranslatef(0.1, 2.7, 2);
 			drawCube(0.05);
 		}
@@ -207,7 +200,6 @@ void King::drawBody(float scale, float x, float y, float z)
 
 		glPushMatrix();
 		{
-			glColor3f(0, 1, 0);
 			glTranslatef(-0.1, 2.7, 2);
 			drawCube(0.05);
 		}
@@ -223,7 +215,6 @@ void King::drawBase(float scale)
 
 	float y = 1;
 	float j = 0;
-	glColor3f(1, 0, 1);
 
 	glPushMatrix();
 	{

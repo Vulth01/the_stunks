@@ -2,15 +2,20 @@
 #include "GameObject.h"
 #include <iostream>
 #include <GL/glut.h>
+#include "Texture.h"
+
+Texture* lightTexture = new Texture("Textures/marble_texture.png");
+Texture* darkTexture = new Texture("Textures/malachite_texture.png");
+Texture* borderTexture = new Texture("Textures/wood_texture.png");
 
 
 void ChessBoard::drawGeometry() 
 {
 	//	Separated for simplicity
-	
 	glPushMatrix();
 	glScalef(0.5f, 0.5f, 0.5f);
 	drawTiles();
+	borderTexture->use();
 	drawBorder();
 	glPopMatrix();
 }
@@ -28,6 +33,12 @@ void ChessBoard::drawTiles() {
 		{
 			offset = nrandom[x + 4][y + 4];
 			//offset = 0;
+			if (colourCheck)  
+				lightTexture->use();
+			else 
+				darkTexture->use();
+
+
 			drawCube(colourCheck, x * 2, y * 2, offset);
 			colourCheck = !colourCheck;
 		}
@@ -39,6 +50,10 @@ void ChessBoard::drawTiles() {
 		for (int y = 4; y < 5; y++)
 		{
 			offset = nrandom[x + 4][y + 4];
+			if (colourCheck)
+				lightTexture->use();
+			else
+				darkTexture->use();
 			drawCube(colourCheck, (x * 2), (y * 2) - 2, offset);
 			colourCheck = !colourCheck;
 		}
@@ -51,6 +66,10 @@ void ChessBoard::drawTiles() {
 		{
 			offset = nrandom[x + 4][y + 4];
 			colourCheck = !colourCheck;
+			if (colourCheck)
+				lightTexture->use();
+			else
+				darkTexture->use();
 			drawCube(colourCheck, (x * 2) - 2, (y * 2) + 2, offset);
 		}
 	}

@@ -9,11 +9,10 @@ void Rook::drawBody(float scale, float x, float y, float z)
 	drawBase(scale);
 
 
-	glColor3f(0, 0, 1);
 	//Draw cylinder (2)
 	glPushMatrix();
 	{
-		float height = -15;
+		float height = -25;
 		float cylBottom = 0;
 		glScalef(scale / 2, scale / 2, scale / 2);
 		glTranslatef(0, 12, 34);
@@ -83,13 +82,11 @@ void Rook::drawBody(float scale, float x, float y, float z)
 	glPopMatrix();
 
 
-
-	glColor3f(0, 1, 0);
 	//Draw cylinder (3)
 	glPushMatrix();
 	{
-		float height = -14;
-		float cylBottom = -12;
+		float height = -21;
+		float cylBottom = -17;
 		glScalef(scale / 1.4, scale / 1.4, scale / 1.4);
 		glTranslatef(0, 5, 24);
 
@@ -160,27 +157,19 @@ void Rook::drawBody(float scale, float x, float y, float z)
 
 	glPushMatrix();
 	{
-		glColor3f(0, 0, 1);
-		glTranslatef(0, 14, 15.5);
-		drawCube(0.6);
+		glTranslatef(0, 2.3,1.9);
+		drawCube(0.08);
 
-		glColor3f(0, 0, 1);
-		glTranslatef(3, 0,3);
+		glTranslatef(2, 0, 2);
 		drawCube(1);
-
-		glColor3f(0, 0, 1);
-		glTranslatef(-3, 0, 3);
+		
+		glTranslatef(-2, 0, 2);
 		drawCube(1);
-
-		glColor3f(0, 0, 1);
-		glTranslatef(-3, 0, -3);
+		
+		glTranslatef(-2, 0, -2);
 		drawCube(1);
 	}
 	glPopMatrix();
-
-
-
-
 }
 
 
@@ -188,7 +177,6 @@ void Rook::drawBase(float scale)
 {
 	//Draw cylinder
 
-	glColor3f(1, 0, 1);
 	glPushMatrix();
 	{
 		glScalef(scale, scale, scale);

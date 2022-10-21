@@ -10,40 +10,30 @@ void Knight::drawBody(float scale, float x, float y, float z)
 	glTranslatef(x, y, z);
 	drawBase(scale);
 
-	
+
+
 	glPushMatrix();
 	{
-		glColor3f(0, 0, 1);
-		glTranslatef(0,8,17);
-		drawCube(1);
+		glScalef(2, 2, 2);
+		glTranslatef(0, -0.4, -0.95);
 
-		glColor3f(0, 1, 0);
-		glTranslatef(0, 2,0.8);
-		drawCube(1);
-
-
-		glColor3f(0, 0, 1);
+		glTranslatef(0,0.9,2);
+		drawCube(0.1);
+		
 		glTranslatef(0, 2, 0.8);
 		drawCube(1);
 
-		glColor3f(0, 1, 0);
-		glTranslatef(0, 2, -0.5);
+		glTranslatef(0, 1.5, 0);
 		drawCube(1);
 
-		glColor3f(0, 0, 1);
+		glTranslatef(0, 1.7, -0.8);
+		drawCube(1);
+
 		glTranslatef(0, 0, -2);
+		drawCube(0.5);
+		
+		glTranslatef(0, 0, -0.5);
 		drawCube(1);
-
-		glColor3f(0, 1, 0);
-		glScalef(0.6, 0.6, 0.6);
-		glTranslatef(0, -1, -4);
-		drawCube(1);
-
-		glColor3f(0, 0, 1);
-		glScalef(0.8, 0.8, 0.8);
-		glTranslatef(0, 0, -2);
-		drawCube(1);
-
 	}
 	glPopMatrix();
 }
@@ -52,7 +42,6 @@ void Knight::drawBase(float scale)
 {
 	//Draw cylinder
 
-	glColor3f(1, 0, 1);
 	glPushMatrix();
 	{
 		glScalef(scale, scale, scale);

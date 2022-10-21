@@ -12,7 +12,6 @@ void Bishop::drawBody(float scale, float x, float y, float z)
 	glTranslatef(x, y, z);
 	drawBase(scale);
 
-	glColor3f(0, 0, 1);
 	//Draw cylinder (2)
 	glPushMatrix();
 	{
@@ -85,9 +84,6 @@ void Bishop::drawBody(float scale, float x, float y, float z)
 	}
 	glPopMatrix();
 
-
-
-	glColor3f(0, 1, 1);
 	//Draw cylinder (3)
 	glPushMatrix();
 	{
@@ -160,11 +156,10 @@ void Bishop::drawBody(float scale, float x, float y, float z)
 	}
 	glPopMatrix();
 
-	glColor3f(0, 1, 0);
 	//Draw sphere
 	glPushMatrix();
 	{
-		glTranslatef(0, 16, 17);
+		glTranslatef(0, 2, 2.05);
 		{
 			int i, j, lats = 30, longs = 30;
 			double r = 2;
@@ -201,7 +196,8 @@ void Bishop::drawBody(float scale, float x, float y, float z)
 	//Draw cone
 	glPushMatrix();
 	{
-		glTranslatef(0, 16, 17);
+		glScalef(0.1,0.1,0.1);
+		glTranslatef(0, 21, 20.5);
 		{
 			glRotatef(90, -90, 0, 0);
 			//Draw cone
@@ -248,7 +244,6 @@ void Bishop::drawBase(float scale)
 {
 	//Draw cylinder
 
-	glColor3f(1, 0, 1);
 	glPushMatrix();
 	{
 		glScalef(scale, scale, scale);
