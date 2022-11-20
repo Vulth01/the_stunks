@@ -11,6 +11,7 @@
 #include <Windows.h>
 
 #include "ChessPiece.h"
+
 //STB
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -24,9 +25,7 @@ using namespace std;
 static const int WIDTH = 800;
 static const int HEIGHT = 600;
 
-
-//Texture* terrainTexture = new Texture("Textures/terrain_texture.png");
-Texture* terrainTexture = new Texture("Textures/grass_block_side.png");
+//Creating instances of the used classes
 GameObject gameObject;
 RainbowCube rainbowCube;
 Texture* texture;
@@ -34,7 +33,10 @@ TexturedCube gObject;
 ChessBoard chessBoard;
 HeightMap heightMap;
 
+Texture* terrainTexture = new Texture("Textures/terrain_texture.png");
+
 ChessPiece chessPiece;
+
 
 
 void input(int key, int x, int y);
@@ -52,7 +54,7 @@ int main(int argc, char* argv[]) {
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GL_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-	
+
 	//Window initialising
 	{
 		int windowX = (int)(glutGet(GLUT_SCREEN_WIDTH) - WIDTH) / 2;
@@ -69,7 +71,7 @@ int main(int argc, char* argv[]) {
 	glutTimerFunc(0, timer, 0);
 	init();
 	glutMainLoop();
-	
+
 	delete texture;
 
 	return 0;
@@ -83,14 +85,13 @@ void init() {
 	glLoadIdentity();
 	gluPerspective(50.0, (double)WIDTH / (double)HEIGHT, 1.0, 1000.0);
 	gluLookAt(
-		0, 30/2, 50/2,
+		0, 30 / 4, 50 / 4,
 		0, 0, 0,
 		0, 1, 0
 	);
 
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	texture = new Texture("Textures/cloudimage.png");
-
 }
 
 void display() {
@@ -99,11 +100,17 @@ void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glRotatef(1, 0, 1, 0);
 
-	//Display HeightMap
+	//Display Chess Pieces
 	{
 		glPushMatrix();
-		terrainTexture->use();
-		heightMap.DrawMap(15, 100, texture);
+		chessPiece.placePieces();
+		glPopMatrix();
+	}
+	////Display HeightMap
+	{
+		glPushMatrix();
+		//terrainTexture->use();
+		heightMap.DrawMap(15, 100, terrainTexture);
 		glPopMatrix();
 	}
 
@@ -117,26 +124,13 @@ void display() {
 	}
 
 
-	//Display Chess Pieces
-	{
-		glPushMatrix();
-		chessPiece.placePieces();
-		glPopMatrix();
-	}
-	//Animate Chess Pieces
-	{
-		glPushMatrix();
-		chessPiece.animatePieces();
-		glPopMatrix();
-	}
-
 	glutSwapBuffers();
 
 }
 
 void timer(int) {
 	glutPostRedisplay();
-	glutTimerFunc(1000/60, timer, 0);		//	Comment this if you want to pause
+	glutTimerFunc(1000 / 60, timer, 0);		//	Comment this if you want to pause
 }
 
 void updateCamera() {
@@ -149,14 +143,14 @@ void updateCamera() {
 	{
 		if (GetKeyState(GLUT_KEY_RIGHT) & 0x8000)
 		{
-			cout << "D" << endl;
+			cout << "RIGHT" << endl;
 			isPressed = true;
 			cameraPos--;
 		}
 		else if (GetKeyState(GLUT_KEY_LEFT) & 0x8000)
 		{
-			
-			cout << "A" << endl;
+
+			cout << "LEFT" << endl;
 			isPressed = true;
 			cameraPos++;
 		}
@@ -173,7 +167,7 @@ void updateCamera() {
 		if (cameraPos < 0) cameraPos = 2;
 		if (cameraPos == 0)
 		{
-			eyeX = -5; 
+			eyeX = -5;
 		}
 		if (cameraPos == 2)
 		{
@@ -183,7 +177,7 @@ void updateCamera() {
 
 	gluLookAt(
 		0, 0, 5,
-		eyeX,0,0,
+		eyeX, 0, 0,
 		0, 1, 0
 	);
 }
@@ -197,14 +191,14 @@ void input(int key, int x, int y) {
 
 	if (key == (GLUT_KEY_RIGHT))
 	{
-		cout << "D" << endl;
+		cout << "RIGHT" << endl;
 		isPressed = true;
 		cameraPos--;
 	}
 	else if (key == (GLUT_KEY_LEFT))
 	{
 
-		cout << "A" << endl;
+		cout << "LEFT" << endl;
 		isPressed = true;
 		cameraPos++;
 	}

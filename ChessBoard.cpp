@@ -1,17 +1,19 @@
 #include "ChessBoard.h"
 #include "GameObject.h"
+#include "Texture.h"
 #include <iostream>
 #include <GL/glut.h>
-#include "Texture.h"
+
 
 Texture* lightTexture = new Texture("Textures/marble_texture.png");
 Texture* darkTexture = new Texture("Textures/malachite_texture.png");
 Texture* borderTexture = new Texture("Textures/wood_texture.png");
 
 
-void ChessBoard::drawGeometry() 
+void ChessBoard::drawGeometry()
 {
 	//	Separated for simplicity
+
 	glPushMatrix();
 	glScalef(0.5f, 0.5f, 0.5f);
 	drawTiles();
@@ -33,13 +35,18 @@ void ChessBoard::drawTiles() {
 		{
 			offset = nrandom[x + 4][y + 4];
 			//offset = 0;
-			if (colourCheck)  
+			if (colourCheck)
+			{
 				lightTexture->use();
-			else 
+				drawCube(x * 2, y * 2, offset);
+			}
+			else
+			{
 				darkTexture->use();
+				drawCube(x * 2, y * 2, offset);
+			}
 
 
-			drawCube(colourCheck, x * 2, y * 2, offset);
 			colourCheck = !colourCheck;
 		}
 	}
@@ -51,10 +58,17 @@ void ChessBoard::drawTiles() {
 		{
 			offset = nrandom[x + 4][y + 4];
 			if (colourCheck)
+			{
 				lightTexture->use();
+				drawCube(x * 2, (y * 2) - 2, offset);
+			}
 			else
+			{
 				darkTexture->use();
-			drawCube(colourCheck, (x * 2), (y * 2) - 2, offset);
+				drawCube(x * 2, (y * 2) - 2, offset);
+			}
+
+
 			colourCheck = !colourCheck;
 		}
 	}
@@ -67,10 +81,17 @@ void ChessBoard::drawTiles() {
 			offset = nrandom[x + 4][y + 4];
 			colourCheck = !colourCheck;
 			if (colourCheck)
+			{
 				lightTexture->use();
+				drawCube((x * 2) - 2, (y * 2) + 2, offset);
+			}
 			else
+			{
 				darkTexture->use();
-			drawCube(colourCheck, (x * 2) - 2, (y * 2) + 2, offset);
+				drawCube((x * 2) - 2, (y * 2) + 2, offset);
+			}
+
+
 		}
 	}
 }
@@ -127,10 +148,10 @@ void ChessBoard::drawSide() {
 }
 
 void ChessBoard::drawBorder() {
-	
+
 	//side 1
 	glPushMatrix();
-	glRotatef(90,1,0,0);
+	glRotatef(90, 1, 0, 0);
 	glTranslatef(-6, 0, 1);
 	drawSide();
 	glPopMatrix();
@@ -163,7 +184,7 @@ void ChessBoard::drawBorder() {
 	glPopMatrix();
 }
 
-void ChessBoard::drawCube(bool isBlack, int x, int y, float offset) {
+void ChessBoard::drawCube(int x, int y, float offset) {
 
 	//original cube vertices
 
@@ -184,44 +205,69 @@ void ChessBoard::drawCube(bool isBlack, int x, int y, float offset) {
 	{
 		glPushMatrix();
 		int i = 0;
-		
 
-		if (isBlack)
+
+		/*if (isBlack)
 			glColor3f(0,0,0);
 		else
-			glColor3f(1,1,1);
+			glColor3f(1,1,1); */
 
 
-		//vertices altered to create a cube in a new position
+			//vertices altered to create a cube in a new position
+			//have gltextcoord2f for each vertex3f
 
+		//	glTexCoord2f(0, 0);
 		glVertex3f(verticeA[i] + x, verticeA[i + 1] + y, verticeA[i + 2] + offset);
+		//	glTexCoord2f(1, 0);
 		glVertex3f(verticeB[i] + x, verticeB[i + 1] + y, verticeB[i + 2] + offset);
+		//	glTexCoord2f(1, 1);
 		glVertex3f(verticeC[i] + x, verticeC[i + 1] + y, verticeC[i + 2] + offset);
+		//glTexCoord2f(0, 1);
 		glVertex3f(verticeD[i] + x, verticeD[i + 1] + y, verticeD[i + 2] + offset);
 
+		//	glTexCoord2f(0, 0);
 		glVertex3f(verticeA[i] + x, verticeA[i + 1] + y, verticeA[i + 2] + offset);
+		//	glTexCoord2f(1, 0);
 		glVertex3f(verticeD[i] + x, verticeD[i + 1] + y, verticeD[i + 2] + offset);
+		//	glTexCoord2f(1, 1);
 		glVertex3f(verticeH[i] + x, verticeH[i + 1] + y, verticeH[i + 2] + offset);
+		//	glTexCoord2f(0, 1);
 		glVertex3f(verticeE[i] + x, verticeE[i + 1] + y, verticeE[i + 2] + offset);
 
+		//glTexCoord2f(0, 0);
 		glVertex3f(verticeB[i] + x, verticeB[i + 1] + y, verticeB[i + 2] + offset);
+		//glTexCoord2f(1, 0);
 		glVertex3f(verticeC[i] + x, verticeC[i + 1] + y, verticeC[i + 2] + offset);
+		//glTexCoord2f(1, 1);
 		glVertex3f(verticeG[i] + x, verticeG[i + 1] + y, verticeG[i + 2] + offset);
+		//glTexCoord2f(0, 1);
 		glVertex3f(verticeF[i] + x, verticeF[i + 1] + y, verticeF[i + 2] + offset);
 
+		//glTexCoord2f(0, 0);
 		glVertex3f(verticeA[i] + x, verticeA[i + 1] + y, verticeA[i + 2] + offset);
+		//glTexCoord2f(1, 0);
 		glVertex3f(verticeB[i] + x, verticeB[i + 1] + y, verticeB[i + 2] + offset);
+		//glTexCoord2f(1, 1);
 		glVertex3f(verticeF[i] + x, verticeF[i + 1] + y, verticeF[i + 2] + offset);
+		//glTexCoord2f(0, 1);
 		glVertex3f(verticeE[i] + x, verticeE[i + 1] + y, verticeE[i + 2] + offset);
 
+		//glTexCoord2f(0, 0);
 		glVertex3f(verticeA[i] + x, verticeA[i + 1] + y, verticeA[i + 2] + offset);
+		//glTexCoord2f(1, 0);
 		glVertex3f(verticeD[i] + x, verticeD[i + 1] + y, verticeD[i + 2] + offset);
+		//glTexCoord2f(1, 1);
 		glVertex3f(verticeH[i] + x, verticeH[i + 1] + y, verticeH[i + 2] + offset);
+		//glTexCoord2f(0, 1);
 		glVertex3f(verticeE[i] + x, verticeE[i + 1] + y, verticeE[i + 2] + offset);
 
+		//glTexCoord2f(0, 0);
 		glVertex3f(verticeD[i] + x, verticeD[i + 1] + y, verticeD[i + 2] + offset);
+		//glTexCoord2f(1, 0);
 		glVertex3f(verticeC[i] + x, verticeC[i + 1] + y, verticeC[i + 2] + offset);
+		//glTexCoord2f(1, 1);
 		glVertex3f(verticeG[i] + x, verticeG[i + 1] + y, verticeG[i + 2] + offset);
+		//glTexCoord2f(0, 1);
 		glVertex3f(verticeH[i] + x, verticeH[i + 1] + y, verticeH[i + 2] + offset);
 
 		glVertex3f(verticeE[i] + x, verticeE[i + 1] + y, verticeE[i + 2] + offset);
@@ -235,8 +281,8 @@ void ChessBoard::drawCube(bool isBlack, int x, int y, float offset) {
 }
 
 void ChessBoard::drawBoard() {
-    drawGeometry();
-    glDisable(GL_DEPTH_TEST);
+	drawGeometry();
+	glDisable(GL_DEPTH_TEST);
 }
 
 void ChessBoard::SetRandom() {

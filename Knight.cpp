@@ -190,3 +190,20 @@ void Knight::drawCube(float scale) {
 	}
 	glEnd();
 }
+
+
+
+void Knight::animatePiece(bool colour, int pieceNum) 
+{
+
+	glTranslatef(100, 100, 100);
+
+	//float timer = 5;
+
+	//while (timer < 5)
+	//{
+	//	glTranslatef(0, 0, 10);
+	//	timer--;
+	//	Sleep(500);
+	//}
+}

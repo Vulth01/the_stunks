@@ -2,13 +2,13 @@
 #include "GameObject.h"
 #include <iostream>
 #include <GL/glut.h>
-
 #include "Pawn.h"
 #include "King.h"
 #include "Queen.h"
 #include "Rook.h"
 #include "Bishop.h"
 #include "Knight.h"
+#include "Texture.h"
 
 
 
@@ -52,13 +52,20 @@ Pawn b_pawn7;
 Pawn b_pawn8;
 
 
+Texture* lTexture = new Texture("Textures/grass_block_side.png");
+Texture* dTexture = new Texture("Textures/malachite_texture.png");
+Texture* bTexture = new Texture("Textures/wood_texture.png");
+
+
 void ChessPiece::placePieces()
 {
 	//Display light pieces
 	{
 		glTranslatef(0, 0.2, 0);
-		glColor3f(0.7,0.5,0);
+		glColor3f(1,1,1);
 		float scale = 0.12;
+
+		lTexture->use();
 
 
 		//King
@@ -88,7 +95,7 @@ void ChessPiece::placePieces()
 
 		//King's Rook
 		glPushMatrix();
-		w_rook2.drawBody(scale, 3, 0.1, 1);
+		w_rook1.drawBody(scale, 3, 0.1, 1);
 		glPopMatrix();
 		glPushMatrix();
 		w_pawn8.drawBody(scale, 24, 7, 15);
@@ -122,15 +129,13 @@ void ChessPiece::placePieces()
 		
 		//Queen's Rook
 		glPushMatrix();
-		w_rook1.drawBody(scale, -4, 0.1, 1);
+		w_rook2.drawBody(scale, -4, 0.1, 1);
 		glPopMatrix();
 		glPushMatrix();
 		w_pawn7.drawBody(scale, -32, 7, 15);
 		glPopMatrix();
 
 	}
-
-
 
 	//Display dark pieces
 	{
@@ -139,6 +144,7 @@ void ChessPiece::placePieces()
 		glColor3f(0, 0.8, 0.8);
 		float scale = 0.12;
 
+		bTexture->use();
 
 		//King
 		glPushMatrix();
@@ -215,8 +221,22 @@ void ChessPiece::placePieces()
 
 void ChessPiece::animatePieces() 
 {
-	b_pawn5.animatePiece(0,0,0);
+	//false = black || true = white
+	//king = 0 || queen = 1
+	//pawn 1-8
 
+
+
+	w_knight1.animatePiece(true,0);
+	//Sleep(2000);
+	//b_knight1.animatePiece(false, 0);
+	//Sleep(2000);
+	//w_pawn2.animatePiece(true, 2);
+	//Sleep(2000);
+	//b_pawn2.animatePiece(false, 2);
+	//Sleep(2000);
+	//w_pawn4.animatePiece(true, 4);
+	//Sleep(2000);
 
 
 }

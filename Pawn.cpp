@@ -172,10 +172,9 @@ void Pawn::drawBase(float scale, float x, float y, float z)
 	glPopMatrix();
 }
 
-void Pawn::animatePiece(float x, float y, float z)
+void Pawn::animatePiece(bool colour, int pieceNum)
 {
 
-	//glTranslatef()
 
 
 }

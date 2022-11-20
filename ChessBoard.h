@@ -12,9 +12,10 @@ private:
 	void drawBoard();
 	void drawSide();
 	void drawBorder();
-	void drawCube(bool isBlack, int x, int y, float offset);
+	void drawCube(int x, int y, float offset);
 	float heightOffset;
 	bool ChangeColour;
 	bool bwColour;
-
 };
+
+
