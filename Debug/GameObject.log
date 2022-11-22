@@ -1,6 +1,4 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (GameObject.vcxproj, New_Transforming.vcxproj, Transforming.vcxproj, WindowCreation.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Main.cpp
-C:\Users\damie\OneDrive\Desktop\GitHub\the_stunks\Input.h(39,2): warning C4091: 'static ': ignored on left of 'Input' when no variable is declared
-C:\Users\damie\OneDrive\Desktop\GitHub\the_stunks\Time.h(13,2): warning C4091: 'static ': ignored on left of 'Time' when no variable is declared
+  Texture.cpp
   GameObject.vcxproj -> C:\Users\damie\OneDrive\Desktop\GitHub\the_stunks\Debug\The_Stunks.exe
           1 file(s) copied.

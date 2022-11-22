@@ -47,10 +47,11 @@ Pixel Texture::getPixelAt(int x, int y)
 	if (image)
 	{
 		unsigned char* pixelOffset = image + (x + width * y) * channels;
-		p.r = static_cast<int>(pixelOffset[0]);
-		p.g = static_cast<int>(pixelOffset[1]);
-		p.b = static_cast<int>(pixelOffset[2]);
-		p.a = channels >= 4 ? static_cast<int>(pixelOffset[3]) : 255;
+
+		if (channels >= 1) p.r = static_cast<int>(pixelOffset[0]) / 255.0f / 10;
+		if (channels >= 2) p.g = static_cast<int>(pixelOffset[1]) / 255.0f / 10;
+		if (channels >= 3) p.b = static_cast<int>(pixelOffset[2]) / 255.0f / 10;
+		if (channels >= 4) p.a = static_cast<int>(pixelOffset[3]) / 255.0f / 10;
 	}
 	return p;
 }

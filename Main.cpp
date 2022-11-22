@@ -9,14 +9,11 @@
 #include "TexturedCube.h"
 #include "ChessBoard.h"
 #include "HeightMap.h"
-#include <Windows.h>
 #include "Model.h"
 #include "ChessPiece.h"
 #include "Input.h"
 #include "CameraController.h"
 #include "Time.h"
-
-
 
 
 //TinyObjLoader
@@ -50,8 +47,6 @@ Texture* terrainTexture = new Texture("Textures/terrain_texture.png");
 
 ChessPiece chessPiece;
 
-
-
 void input(int key, int x, int y);
 void init();
 void display();
@@ -61,6 +56,10 @@ int cameraPos;
 
 Light* light1;
 Light* light2;
+
+Light* pointLight;
+Light* directionalLight;
+Light* spotLight;
 
 int windowId;
 bool isPressed = false;
@@ -106,42 +105,41 @@ void init() {
 	glLoadIdentity();
 	gluPerspective(50.0, (double)WIDTH / (double)HEIGHT, 1.0, 1000.0);
 	gluLookAt(
-		0, 30 / 4, 50 / 4,
+		0, 30 / 1, 50 / 1,
 		0, 0, 0,
 		0, 1, 0
 	);
 
 
 	//LIGHTING
-	glEnable(GL_LIGHTING);
-	light1 = new Light();
-	light1->init();
-	light1->setPosition(glm::vec4(-5, 2, 0, 1));
-	light1->setAmbient(glm::vec4(0.25f, 0, 1, 0.5f));
-	light1->setSpecular(glm::vec4(0, 0, 0, 0));
-	light1->setDiffuse(glm::vec4(0.25f, 0, 1, 0.5f));
-	
-	light2 = new Light();
-	light2->init();
-	light2->setPosition(glm::vec4(5, 2, 0, 1));
-	light2->setAmbient(glm::vec4(0.25f, 0, 1, 0.5f));
-	light2->setSpecular(glm::vec4(0, 0, 0, 0));
-	light2->setDiffuse(glm::vec4(0.25f, 0, 1, 0.5f));
 
-	//light2 = new Light();
-	//light2->init();
-	//light2->setPosition(glm::vec4(5, 2, 0, 1));
-	//light2->setAmbient(glm::vec4(1, 0, 0.25f, 0.5f));
-	//light2->setSpecular(glm::vec4(0, 0, 0, 0));
-	//light2->setDiffuse(glm::vec4(0.25f, 0, 1, 0.5f));
+	glEnable(GL_LIGHTING);
+
+
+	pointLight = new Light();
+	pointLight->init();
+	pointLight->setPosition(glm::vec4(-10, 2, 0, 1));
+	pointLight->setAmbient(glm::vec4(10, 10, 10, 0.5f));
+	pointLight->setSpecular(glm::vec4(0, 0, 0, 0));
+	pointLight->setDiffuse(glm::vec4(0, 1, 1, 0.5f));
+
+	directionalLight = new Light();
+	directionalLight->init();
+	directionalLight->setPosition(glm::vec4(-100, 2, 0, 1));
+	directionalLight->setAmbient(glm::vec4(5, 5, 5, 0.5f));
+	directionalLight->setSpecular(glm::vec4(0, 0, 0, 0));
+	directionalLight->setDiffuse(glm::vec4(0.25f, 0.25f, 0.25f, 0.5f));
+
+	spotLight = new Light();
+	spotLight->init();
+	spotLight->setPosition(glm::vec4(-10, 2, 0, 1));
+	spotLight->setAmbient(glm::vec4(0.1f, 0.1f, 0.1f, 0.5f));
+	spotLight->setSpecular(glm::vec4(0, 0, 0, 0));
+	spotLight->setDiffuse(glm::vec4(2, 2, 2, 0.5f));
 
 	cameraController = new CameraController();
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f); 
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	texture = new Texture("Textures/cloudimage.png");
-
-
-
-
 }
 
 void display() {
@@ -156,11 +154,14 @@ void display() {
 		chessPiece.placePieces();
 		glPopMatrix();
 	}
-	////Display HeightMap
+
+
+	//Display HeightMap
 	{
 		glPushMatrix();
-		//terrainTexture->use();
-		heightMap.DrawMap(15, 100, terrainTexture);
+		terrainTexture->use();
+		glTranslatef(0, -10, 0);
+		heightMap.DrawMap(255, 100, terrainTexture);
 		glPopMatrix();
 	}
 
@@ -276,4 +277,3 @@ void input(int key, int x, int y) {
 		0, 1, 0
 	);
 }
-
