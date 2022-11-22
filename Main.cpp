@@ -88,9 +88,11 @@ int main(int argc, char* argv[]) {
 	init();
 	glutMainLoop();
 
-	delete light1;
-	delete light2;
-	//delete texture;
+
+	delete texture;
+	delete pointLight;
+	delete directionalLight;
+	delete spotLight;
 	delete model;
 	delete cameraController;
 
@@ -110,32 +112,35 @@ void init() {
 		0, 1, 0
 	);
 
+	glutMotionFunc(Input::mousePositionUpdate);
+	glutPassiveMotionFunc(Input::mousePositionUpdate);
+	glutKeyboardFunc(Input::keyboardUpdate);
+	glutKeyboardUpFunc(Input::keyboardUpUpdate);
+
 
 	//LIGHTING
+		glEnable(GL_LIGHTING);
+		pointLight = new Light();
+		pointLight->init();
+		pointLight->setPosition(glm::vec4(-10, 2, 0, 1));
+		pointLight->setAmbient(glm::vec4(10, 0, 10, 0.5f));
+		pointLight->setSpecular(glm::vec4(0, 0, 0, 0));
+		pointLight->setDiffuse(glm::vec4(1, 1, 1, 0.5f));
 
-	glEnable(GL_LIGHTING);
+		directionalLight = new Light();
+		directionalLight->init();
+		directionalLight->setPosition(glm::vec4(-100, 2, 0, 1));
+		directionalLight->setAmbient(glm::vec4(5, 0, 5, 0.5f));
+		directionalLight->setSpecular(glm::vec4(0, 0, 0, 0));
+		directionalLight->setDiffuse(glm::vec4(0.25f, 0.0f, 0.25f, 0.5f));
 
+		spotLight = new Light();
+		spotLight->init(); 
+		spotLight->setPosition(glm::vec4(-10, 2, 0, 1));
+		spotLight->setAmbient(glm::vec4(0.1f, 0.1f, 0.1f, 0.5f));
+		spotLight->setSpecular(glm::vec4(0, 0, 0, 0));
+		spotLight->setDiffuse(glm::vec4(2, 2, 2, 0.5f));
 
-	pointLight = new Light();
-	pointLight->init();
-	pointLight->setPosition(glm::vec4(-10, 2, 0, 1));
-	pointLight->setAmbient(glm::vec4(10, 10, 10, 0.5f));
-	pointLight->setSpecular(glm::vec4(0, 0, 0, 0));
-	pointLight->setDiffuse(glm::vec4(0, 1, 1, 0.5f));
-
-	directionalLight = new Light();
-	directionalLight->init();
-	directionalLight->setPosition(glm::vec4(-100, 2, 0, 1));
-	directionalLight->setAmbient(glm::vec4(5, 5, 5, 0.5f));
-	directionalLight->setSpecular(glm::vec4(0, 0, 0, 0));
-	directionalLight->setDiffuse(glm::vec4(0.25f, 0.25f, 0.25f, 0.5f));
-
-	spotLight = new Light();
-	spotLight->init();
-	spotLight->setPosition(glm::vec4(-10, 2, 0, 1));
-	spotLight->setAmbient(glm::vec4(0.1f, 0.1f, 0.1f, 0.5f));
-	spotLight->setSpecular(glm::vec4(0, 0, 0, 0));
-	spotLight->setDiffuse(glm::vec4(2, 2, 2, 0.5f));
 
 	cameraController = new CameraController();
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
@@ -147,6 +152,16 @@ void display() {
 	updateCamera();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glRotatef(1, 0, 1, 0);
+
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	Input::updateBefore();
+	Time::update();
+	cameraController->update();
+
+
 
 	//Display Chess Pieces
 	{
@@ -173,9 +188,12 @@ void display() {
 		chessBoard.draw();
 		glPopMatrix();
 	}
+	glPopMatrix();
 
-
+	cout << "FPS: " << Time::getFrameRate() << endl;
+	Input::updateAfter();
 	glutSwapBuffers();
+
 
 }
 
@@ -188,29 +206,6 @@ void updateCamera() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	double eyeX = 0;
-
-
-	if (!isPressed)
-	{
-		if (GetKeyState(GLUT_KEY_RIGHT) & 0x8000)
-		{
-			cout << "RIGHT" << endl;
-			isPressed = true;
-			cameraPos--;
-		}
-		else if (GetKeyState(GLUT_KEY_LEFT) & 0x8000)
-		{
-
-			cout << "LEFT" << endl;
-			isPressed = true;
-			cameraPos++;
-		}
-	}
-	else
-	{
-		Sleep(500);
-		isPressed = false;
-	}
 
 	//Check cameraPos
 	{
@@ -241,7 +236,10 @@ void input(int key, int x, int y) {
 
 
 	//On Press F4 -> Exit
-	if (key == (GLUT_KEY_F4)) { glutDestroyWindow(windowId); }
+	if (key == (GLUT_KEY_F4)) 
+	{ 
+		glutDestroyWindow(windowId); 
+	}
 
 	//On Press Right Key
 	if (key == (GLUT_KEY_RIGHT)) {
