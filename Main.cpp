@@ -4,13 +4,24 @@
 #include "GameObject.h"
 #include "RainbowCube.h"
 #include "Pixel.h"
+#include "Light.h"
 #include "Texture.h"
 #include "TexturedCube.h"
 #include "ChessBoard.h"
 #include "HeightMap.h"
 #include <Windows.h>
-
+#include "Model.h"
 #include "ChessPiece.h"
+#include "Input.h"
+#include "CameraController.h"
+#include "Time.h"
+
+
+
+
+//TinyObjLoader
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <tiny_obj_loader.h>
 
 //STB
 #define STB_IMAGE_IMPLEMENTATION
@@ -32,6 +43,8 @@ Texture* texture;
 TexturedCube gObject;
 ChessBoard chessBoard;
 HeightMap heightMap;
+Model* model;
+CameraController* cameraController;
 
 Texture* terrainTexture = new Texture("Textures/terrain_texture.png");
 
@@ -46,6 +59,10 @@ void timer(int);
 void updateCamera();
 int cameraPos;
 
+Light* light1;
+Light* light2;
+
+int windowId;
 bool isPressed = false;
 
 //Initial Calls + Window Setup
@@ -61,7 +78,7 @@ int main(int argc, char* argv[]) {
 		int windowY = (int)(glutGet(GLUT_SCREEN_HEIGHT) - HEIGHT) / 2;
 		glutInitWindowPosition(windowX, windowY);
 		glutInitWindowSize(WIDTH, HEIGHT);
-		glutCreateWindow("My First Window");
+		windowId = glutCreateWindow("My First Window");
 	}
 
 	chessBoard.SetRandom(); //Sets the offset for each chess tile
@@ -72,7 +89,11 @@ int main(int argc, char* argv[]) {
 	init();
 	glutMainLoop();
 
-	delete texture;
+	delete light1;
+	delete light2;
+	//delete texture;
+	delete model;
+	delete cameraController;
 
 	return 0;
 }
@@ -90,8 +111,37 @@ void init() {
 		0, 1, 0
 	);
 
-	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+
+	//LIGHTING
+	glEnable(GL_LIGHTING);
+	light1 = new Light();
+	light1->init();
+	light1->setPosition(glm::vec4(-5, 2, 0, 1));
+	light1->setAmbient(glm::vec4(0.25f, 0, 1, 0.5f));
+	light1->setSpecular(glm::vec4(0, 0, 0, 0));
+	light1->setDiffuse(glm::vec4(0.25f, 0, 1, 0.5f));
+	
+	light2 = new Light();
+	light2->init();
+	light2->setPosition(glm::vec4(5, 2, 0, 1));
+	light2->setAmbient(glm::vec4(0.25f, 0, 1, 0.5f));
+	light2->setSpecular(glm::vec4(0, 0, 0, 0));
+	light2->setDiffuse(glm::vec4(0.25f, 0, 1, 0.5f));
+
+	//light2 = new Light();
+	//light2->init();
+	//light2->setPosition(glm::vec4(5, 2, 0, 1));
+	//light2->setAmbient(glm::vec4(1, 0, 0.25f, 0.5f));
+	//light2->setSpecular(glm::vec4(0, 0, 0, 0));
+	//light2->setDiffuse(glm::vec4(0.25f, 0, 1, 0.5f));
+
+	cameraController = new CameraController();
+	glClearColor(0.2f, 0.2f, 0.2f, 1.0f); 
 	texture = new Texture("Textures/cloudimage.png");
+
+
+
+
 }
 
 void display() {
@@ -189,16 +239,19 @@ void input(int key, int x, int y) {
 	double eyeX = 0;
 
 
-	if (key == (GLUT_KEY_RIGHT))
-	{
-		cout << "RIGHT" << endl;
+	//On Press F4 -> Exit
+	if (key == (GLUT_KEY_F4)) { glutDestroyWindow(windowId); }
+
+	//On Press Right Key
+	if (key == (GLUT_KEY_RIGHT)) {
+		cout << "D" << endl;
 		isPressed = true;
 		cameraPos--;
 	}
-	else if (key == (GLUT_KEY_LEFT))
-	{
 
-		cout << "LEFT" << endl;
+	//On Press Left Key
+	else if (key == (GLUT_KEY_LEFT)) {
+		cout << "A" << endl;
 		isPressed = true;
 		cameraPos++;
 	}
