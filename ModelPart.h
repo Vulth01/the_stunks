@@ -10,4 +10,3 @@ public:
 	std::vector<unsigned int> indices;
 
 };
-

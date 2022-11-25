@@ -74,6 +74,6 @@ void GameObject::drawGeometry() {
 void GameObject::draw() {
 	drawGeometry();
 	glDisable(GL_DEPTH_TEST);
-	drawOrigin();
+	//drawOrigin();
 	glEnable(GL_DEPTH_TEST);
 }

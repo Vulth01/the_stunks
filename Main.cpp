@@ -1,4 +1,5 @@
 #include <GL/glut.h>
+#include <GLFW/glfw3.h>
 #include <iostream>
 #include <math.h>
 #include "GameObject.h"
@@ -54,6 +55,10 @@ void timer(int);
 void updateCamera();
 int cameraPos;
 
+Model* model1;
+Model* model2;
+Model* model3;
+
 Light* light1;
 Light* light2;
 
@@ -77,7 +82,7 @@ int main(int argc, char* argv[]) {
 		int windowY = (int)(glutGet(GLUT_SCREEN_HEIGHT) - HEIGHT) / 2;
 		glutInitWindowPosition(windowX, windowY);
 		glutInitWindowSize(WIDTH, HEIGHT);
-		windowId = glutCreateWindow("My First Window");
+		windowId = glutCreateWindow("The_Stunks");	
 	}
 
 	chessBoard.SetRandom(); //Sets the offset for each chess tile
@@ -95,6 +100,9 @@ int main(int argc, char* argv[]) {
 	delete spotLight;
 	delete model;
 	delete cameraController;
+	delete model1;
+	delete model2;
+	delete model3;
 
 	return 0;
 }
@@ -123,16 +131,16 @@ void init() {
 		pointLight = new Light();
 		pointLight->init();
 		pointLight->setPosition(glm::vec4(-10, 2, 0, 1));
-		pointLight->setAmbient(glm::vec4(10, 0, 10, 0.5f));
+		pointLight->setAmbient(glm::vec4(10, 10, 10, 0.5f));
 		pointLight->setSpecular(glm::vec4(0, 0, 0, 0));
 		pointLight->setDiffuse(glm::vec4(1, 1, 1, 0.5f));
 
 		directionalLight = new Light();
 		directionalLight->init();
 		directionalLight->setPosition(glm::vec4(-100, 2, 0, 1));
-		directionalLight->setAmbient(glm::vec4(5, 0, 5, 0.5f));
+		directionalLight->setAmbient(glm::vec4(5, 5, 5, 0.5f));
 		directionalLight->setSpecular(glm::vec4(0, 0, 0, 0));
-		directionalLight->setDiffuse(glm::vec4(0.25f, 0.0f, 0.25f, 0.5f));
+		directionalLight->setDiffuse(glm::vec4(0.25f, 0.25f, 0.25f, 0.5f));
 
 		spotLight = new Light();
 		spotLight->init(); 
@@ -142,6 +150,9 @@ void init() {
 		spotLight->setDiffuse(glm::vec4(2, 2, 2, 0.5f));
 
 
+	model1 = new Model("Models/", "crystal_cluster");
+	model2 = new Model("Models/", "crystal_cluster2");
+	model3 = new Model("Models/", "crystal_cluster3");
 	cameraController = new CameraController();
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 	texture = new Texture("Textures/cloudimage.png");
@@ -192,9 +203,74 @@ void display() {
 
 	cout << "FPS: " << Time::getFrameRate() << endl;
 	Input::updateAfter();
+
+
+
+	//Draw crystals along the terrain
+	glPushMatrix();
+	{
+
+		glScalef(2, 2, 2);
+		glTranslatef(20,-1,-20);
+		
+		for (int i = 0; i < 20; i++)
+		{
+
+			glTranslatef(-40.0f, 0, 2.0f);
+			
+			for (int j= 0; j < 20; j++)
+			{
+
+				glTranslatef(2.0f, 0, 0);
+				model1->draw();
+			}
+		}
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+	{
+		glScalef(2, 2, 2);
+		glTranslatef(20, -1, -20);
+
+		for (int i = 0; i < 20; i++)
+		{
+
+			glTranslatef(-40.0f, 0, 2.0f);
+
+			for (int j = 0; j < 20; j++)
+			{
+
+				glTranslatef(2.0f, 0, 0);
+				model2->draw();
+			}
+		}
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+	{
+		glScalef(2, 2, 2);
+		glTranslatef(20, -1, -20);
+
+		for (int i = 0; i < 40; i++)
+		{
+
+			glTranslatef(-40.0f, 0, 1.0f);
+
+			for (int j = 0; j < 40; j++)
+			{
+
+				glTranslatef(1.0f, 0, 0);
+				model3->draw();
+			}
+		}
+	}
+	glPopMatrix();
+
+
+
 	glutSwapBuffers();
-
-
 }
 
 void timer(int) {

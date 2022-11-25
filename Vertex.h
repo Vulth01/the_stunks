@@ -10,4 +10,3 @@ public:
 	glm::vec3 normal;
 	glm::vec2 texCoord;
 };
-

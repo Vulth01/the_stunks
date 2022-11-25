@@ -1,0 +1,13 @@
+# Blender 3.3.1 MTL File: 'crystal_cluster3.blend'
+# www.blender.org
+
+newmtl Material.001
+Ns 583.140503
+Ka 0.663636 0.663636 0.663636
+Kd 0.276542 0.219046 0.800000
+Ks 0.409091 0.409091 0.409091
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Bump -bm 0.500000 C:/Users/Mashka/Desktop/crystals1diffuse.jpg
