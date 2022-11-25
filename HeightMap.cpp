@@ -66,69 +66,71 @@ void HeightMap::DrawMap(float maxHeight, float size, Texture* texture) {
 
 
 
-/*
-void GenerateTerrain::renderHeightmap(float size, float h)
-{
-	//Added glGenList to make terrain easier to draw
-	id = glGenLists(1);
 
-	glNewList(id, GL_COMPILE);
-	{
-		//Looping through each pixel in the image and changing its height based off of pixel's r g b values
-		for (int y = 0; y < height - 1; y++)
-		{
-			for (int x = 0; x < width - 1; x++)
-			{
-				Pixel p1 = GenerateTerrain::getPixelAt(x, y);
-				Pixel p2 = GenerateTerrain::getPixelAt(x + 1, y);
-				Pixel p3 = GenerateTerrain::getPixelAt(x, y + 1);
-				Pixel p4 = GenerateTerrain::getPixelAt(x + 1, y + 1);
-
-				double vX1 = ((float)x / width) * size;
-				double vZ1 = ((float)y / height) * size;
-				double vX2 = (((float)x + 1) / width) * size;
-				double vZ2 = (((float)y + 1) / height) * size;
-
-				glBegin(GL_TRIANGLE_STRIP);
-				{
-					glTexCoord2f(0, 0);
-					glColor3f(p1.r, p1.g, p1.b);
-					glVertex3f(vX1, (p1.r) * h, vZ1);
-
-					glTexCoord2f(0, 1);
-					glColor3f(p2.r, p2.g, p2.b);
-					glVertex3f(vX2, (p2.r) * h, vZ1);
-
-					glTexCoord2f(1, 0);
-					glColor3f(p3.r, p3.g, p3.b);
-					glVertex3f(vX1, (p3.r) * h, vZ2);
-
-					glTexCoord2f(1, 1);
-					glColor3f(p4.r, p4.g, p4.b);
-					glVertex3f(vX2, (p4.r) * h, vZ2);
-				}
-				glEnd();
-
-			}
-		}
-	}
-	glDisable(GL_TEXTURE_2D);
-	glEndList();
-}
-
-void GenerateTerrain::drawTerrain(float size)
-{
-	//Centering the terrain (Middle of terrain is at (0, 0, 0))
-	glPushMatrix();
-	glTranslatef(-size / 2.0, 0, -size / 2.0);
-
-	//Using terrain grass texture
-	grassTexture->use();
-
-	glCallList(id);
-
-	glDisable(GL_TEXTURE_2D);
-
-	glPopMatrix();
-}
-*/
+//void HeightMap::DrawMap(float maxHeight, float size, Texture* texture) {
+//	
+//	//void GenerateTerrain::renderHeightmap(float size, float h){
+//	
+//	
+//	//Added glGenList to make terrain easier to draw
+//	id = glGenLists(1);
+//
+//	glNewList(id, GL_COMPILE);
+//	{
+//		//Looping through each pixel in the image and changing its height based off of pixel's r g b values
+//		for (int y = 0; y < height - 1; y++)
+//		{
+//			for (int x = 0; x < width - 1; x++)
+//			{
+//				Pixel p1 = GenerateTerrain::getPixelAt(x, y);
+//				Pixel p2 = GenerateTerrain::getPixelAt(x + 1, y);
+//				Pixel p3 = GenerateTerrain::getPixelAt(x, y + 1);
+//				Pixel p4 = GenerateTerrain::getPixelAt(x + 1, y + 1);
+//
+//				double vX1 = ((float)x / width) * size;
+//				double vZ1 = ((float)y / height) * size;
+//				double vX2 = (((float)x + 1) / width) * size;
+//				double vZ2 = (((float)y + 1) / height) * size;
+//
+//				glBegin(GL_TRIANGLE_STRIP);
+//				{
+//					glTexCoord2f(0, 0);
+//					glColor3f(p1.r, p1.g, p1.b);
+//					glVertex3f(vX1, (p1.r) * h, vZ1);
+//
+//					glTexCoord2f(0, 1);
+//					glColor3f(p2.r, p2.g, p2.b);
+//					glVertex3f(vX2, (p2.r) * h, vZ1);
+//
+//					glTexCoord2f(1, 0);
+//					glColor3f(p3.r, p3.g, p3.b);
+//					glVertex3f(vX1, (p3.r) * h, vZ2);
+//
+//					glTexCoord2f(1, 1);
+//					glColor3f(p4.r, p4.g, p4.b);
+//					glVertex3f(vX2, (p4.r) * h, vZ2);
+//				}
+//				glEnd();
+//
+//			}
+//		}
+//	}
+//	glDisable(GL_TEXTURE_2D);
+//	glEndList();
+//}
+//
+//void GenerateTerrain::drawTerrain(float size)
+//{
+//	//Centering the terrain (Middle of terrain is at (0, 0, 0))
+//	glPushMatrix();
+//	glTranslatef(-size / 2.0, 0, -size / 2.0);
+//
+//	//Using terrain grass texture
+//	grassTexture->use();
+//
+//	glCallList(id);
+//
+//	glDisable(GL_TEXTURE_2D);
+//
+//	glPopMatrix();
+//}

@@ -53,6 +53,8 @@ void init();
 void display();
 void timer(int);
 void updateCamera();
+void drawSkybox();
+void drawWoodSpikes();
 int cameraPos;
 
 Model* model1;
@@ -82,7 +84,7 @@ int main(int argc, char* argv[]) {
 		int windowY = (int)(glutGet(GLUT_SCREEN_HEIGHT) - HEIGHT) / 2;
 		glutInitWindowPosition(windowX, windowY);
 		glutInitWindowSize(WIDTH, HEIGHT);
-		windowId = glutCreateWindow("The_Stunks");	
+		windowId = glutCreateWindow("The_Stunks_POE");	
 	}
 
 	chessBoard.SetRandom(); //Sets the offset for each chess tile
@@ -90,6 +92,7 @@ int main(int argc, char* argv[]) {
 	glutDisplayFunc(display);
 	glutSpecialFunc(input);
 	glutTimerFunc(0, timer, 0);
+
 	init();
 	glutMainLoop();
 
@@ -103,6 +106,7 @@ int main(int argc, char* argv[]) {
 	delete model1;
 	delete model2;
 	delete model3;
+	delete terrainTexture;
 
 	return 0;
 }
@@ -127,18 +131,19 @@ void init() {
 
 
 	//LIGHTING
-		glEnable(GL_LIGHTING);
+
+	glEnable(GL_LIGHTING);
 		pointLight = new Light();
 		pointLight->init();
 		pointLight->setPosition(glm::vec4(-10, 2, 0, 1));
-		pointLight->setAmbient(glm::vec4(10, 10, 10, 0.5f));
+		pointLight->setAmbient(glm::vec4(1.5f, 0, 1.5f, 0.5f));
 		pointLight->setSpecular(glm::vec4(0, 0, 0, 0));
-		pointLight->setDiffuse(glm::vec4(1, 1, 1, 0.5f));
+		pointLight->setDiffuse(glm::vec4(1.5f, 0, 1.5f, 0.5f));
 
 		directionalLight = new Light();
 		directionalLight->init();
 		directionalLight->setPosition(glm::vec4(-100, 2, 0, 1));
-		directionalLight->setAmbient(glm::vec4(5, 5, 5, 0.5f));
+		directionalLight->setAmbient(glm::vec4(0.5f, 0.5f, 0.5f, 0.5f));
 		directionalLight->setSpecular(glm::vec4(0, 0, 0, 0));
 		directionalLight->setDiffuse(glm::vec4(0.25f, 0.25f, 0.25f, 0.5f));
 
@@ -147,7 +152,8 @@ void init() {
 		spotLight->setPosition(glm::vec4(-10, 2, 0, 1));
 		spotLight->setAmbient(glm::vec4(0.1f, 0.1f, 0.1f, 0.5f));
 		spotLight->setSpecular(glm::vec4(0, 0, 0, 0));
-		spotLight->setDiffuse(glm::vec4(2, 2, 2, 0.5f));
+		spotLight->setDiffuse(glm::vec4(0.50f, 0.50f, 0.50f, 0.5f));
+
 
 
 	model1 = new Model("Models/", "crystal_cluster");
@@ -173,6 +179,16 @@ void display() {
 	cameraController->update();
 
 
+	//Display HeightMap
+	{
+		glPushMatrix();
+		//texture->use();
+		terrainTexture->use();
+		glTranslatef(0, -10, 0);
+		heightMap.DrawMap(255, 100, terrainTexture);
+		glPopMatrix();
+	}
+
 
 	//Display Chess Pieces
 	{
@@ -182,14 +198,6 @@ void display() {
 	}
 
 
-	//Display HeightMap
-	{
-		glPushMatrix();
-		terrainTexture->use();
-		glTranslatef(0, -10, 0);
-		heightMap.DrawMap(255, 100, terrainTexture);
-		glPopMatrix();
-	}
 
 	//Display ChessBoard
 	{
@@ -205,70 +213,14 @@ void display() {
 	Input::updateAfter();
 
 
+	//Draw wood along the terrain
+	drawWoodSpikes();
 
-	//Draw crystals along the terrain
-	glPushMatrix();
+
+	//Display Skybox
 	{
-
-		glScalef(2, 2, 2);
-		glTranslatef(20,-1,-20);
-		
-		for (int i = 0; i < 20; i++)
-		{
-
-			glTranslatef(-40.0f, 0, 2.0f);
-			
-			for (int j= 0; j < 20; j++)
-			{
-
-				glTranslatef(2.0f, 0, 0);
-				model1->draw();
-			}
-		}
+		drawSkybox();
 	}
-	glPopMatrix();
-
-	glPushMatrix();
-	{
-		glScalef(2, 2, 2);
-		glTranslatef(20, -1, -20);
-
-		for (int i = 0; i < 20; i++)
-		{
-
-			glTranslatef(-40.0f, 0, 2.0f);
-
-			for (int j = 0; j < 20; j++)
-			{
-
-				glTranslatef(2.0f, 0, 0);
-				model2->draw();
-			}
-		}
-	}
-	glPopMatrix();
-
-	glPushMatrix();
-	{
-		glScalef(2, 2, 2);
-		glTranslatef(20, -1, -20);
-
-		for (int i = 0; i < 40; i++)
-		{
-
-			glTranslatef(-40.0f, 0, 1.0f);
-
-			for (int j = 0; j < 40; j++)
-			{
-
-				glTranslatef(1.0f, 0, 0);
-				model3->draw();
-			}
-		}
-	}
-	glPopMatrix();
-
-
 
 	glutSwapBuffers();
 }
@@ -350,4 +302,133 @@ void input(int key, int x, int y) {
 		eyeX, 0, 0,
 		0, 1, 0
 	);
+}
+
+void drawWoodSpikes() {
+
+	glPushMatrix();
+	{
+
+		glScalef(2, 2, 2);
+		glTranslatef(20, -1, -20);
+
+		for (int i = 0; i < 20; i++)
+		{
+
+			glTranslatef(-40.0f, 0, 2.0f);
+
+			for (int j = 0; j < 20; j++)
+			{
+
+				glTranslatef(2.0f, 0, 0);
+				model1->draw();
+			}
+		}
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+	{
+		glScalef(2, 2, 2);
+		glTranslatef(20, -1, -20);
+
+		for (int i = 0; i < 20; i++)
+		{
+
+			glTranslatef(-40.0f, 0, 2.0f);
+
+			for (int j = 0; j < 20; j++)
+			{
+
+				glTranslatef(2.0f, 0, 0);
+				model2->draw();
+			}
+		}
+	}
+	glPopMatrix();
+
+	glPushMatrix();
+	{
+		glScalef(2, 2, 2);
+		glTranslatef(20, -1, -20);
+
+		for (int i = 0; i < 40; i++)
+		{
+
+			glTranslatef(-40.0f, 0, 1.0f);
+
+			for (int j = 0; j < 40; j++)
+			{
+
+				glTranslatef(1.0f, 0, 0);
+				model3->draw();
+			}
+		}
+	}
+	glPopMatrix();
+}
+
+void drawSkybox() {
+
+	//Draw skybox top
+	{
+		glPushMatrix();
+		glColor3f(1, 0, 1);
+		glTranslatef(1, 100, 1);
+		glScalef(100, 1, 100);
+		rainbowCube.drawCube();
+		glPopMatrix();
+	}
+
+	//Draw skybox bottom
+	{
+		glPushMatrix();
+		glColor3f(0, 1, 1);
+		glTranslatef(1, -100, 1);
+		glScalef(100, 1, 100);
+		rainbowCube.drawCube();
+		glPopMatrix();
+	}
+
+	//Draw skybox left
+	{
+		glPushMatrix();
+		glColor3f(0, 0, 1);
+		glTranslatef(100, 1, 1);
+		glScalef(1, 100, 100);
+		rainbowCube.drawCube();
+		glPopMatrix();
+	}
+
+	//Draw skybox right
+	{
+		glPushMatrix();
+		glColor3f(0, 0, 1);
+		glTranslatef(-100, 1, 1);
+		glScalef(1, 100, 100);
+		rainbowCube.drawCube();
+		glPopMatrix();
+	}
+
+	//Draw skybox front
+	{
+		glPushMatrix();
+		glColor3f(0, 0, 1);
+		glTranslatef(1, 1, 100);
+		glScalef(100, 100, 1);
+		rainbowCube.drawCube();
+		glPopMatrix();
+	}
+
+	//Draw skybox back
+	{
+		glPushMatrix();
+		glColor3f(0,0,1);
+		glTranslatef(1, 1, -100);
+		glScalef(100, 100, 1);
+		rainbowCube.drawCube();
+		glPopMatrix();
+	}
+
+
 }
